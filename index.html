@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ฟอร์มรับฝาก - Thunder Cash</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Sarabun", sans-serif;
+    background: #f0f2f5;
+    color: #1c1e21;
+    padding: 16px;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  .header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 16px;
+    text-align: center;
+  }
+  .header h1 { font-size: 22px; margin-bottom: 4px; }
+  .header p { font-size: 13px; opacity: 0.9; }
+
+  .card {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 16px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  }
+  .card h2 {
+    font-size: 16px;
+    color: #667eea;
+    margin-bottom: 16px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #f0f2f5;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .card h2 .num {
+    background: #667eea;
+    color: white;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+  }
+
+  .field { margin-bottom: 14px; }
+  .field label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: #050505;
+  }
+  .field label .required { color: #e53935; }
+  .field input, .field select, .field textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1.5px solid #dddfe2;
+    border-radius: 8px;
+    font-size: 15px;
+    font-family: inherit;
+  }
+  .field input:focus, .field select:focus, .field textarea:focus {
+    outline: none;
+    border-color: #667eea;
+  }
+
+  .row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+  .radio-group, .checkbox-group {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .radio-group label, .checkbox-group label {
+    flex: 1;
+    min-width: 80px;
+    padding: 10px;
+    border: 1.5px solid #dddfe2;
+    border-radius: 8px;
+    text-align: center;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    background: white;
+  }
+  .radio-group input, .checkbox-group input { display: none; }
+  .radio-group label:has(input:checked),
+  .checkbox-group label:has(input:checked) {
+    border-color: #667eea;
+    background: #f0f4ff;
+    color: #667eea;
+  }
+
+  .grade-A:has(input:checked) { border-color: #4caf50 !important; background: #e8f5e9 !important; color: #2e7d32 !important; }
+  .grade-B:has(input:checked) { border-color: #ff9800 !important; background: #fff3e0 !important; color: #e65100 !important; }
+  .grade-C:has(input:checked) { border-color: #f44336 !important; background: #ffebee !important; color: #c62828 !important; }
+
+  .category-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px;
+  }
+  .category-card {
+    background: white;
+    border: 2px solid #dddfe2;
+    border-radius: 12px;
+    padding: 16px 8px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+  }
+  .category-card:hover { border-color: #667eea; transform: translateY(-2px); }
+  .category-card .emoji { font-size: 36px; display: block; margin-bottom: 6px; }
+  .category-card .name { font-size: 13px; font-weight: 600; }
+  .category-card .rank {
+    position: absolute;
+    top: 4px; right: 6px;
+    font-size: 10px;
+    color: #65676b;
+    background: #f0f2f5;
+    padding: 2px 6px;
+    border-radius: 8px;
+  }
+  .category-card.top .rank { background: #ffd700; color: #5d4037; }
+
+  .submit-btn {
+    width: 100%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    padding: 16px;
+    border-radius: 10px;
+    font-size: 17px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 8px;
+    font-family: inherit;
+  }
+
+  .preview {
+    background: #1c1e21;
+    color: #e4e6eb;
+    padding: 20px;
+    border-radius: 12px;
+    margin-top: 20px;
+    white-space: pre-line;
+    font-size: 14px;
+    line-height: 1.6;
+    display: none;
+  }
+  .preview.show { display: block; }
+  .preview h3 { color: #667eea; margin-bottom: 12px; font-size: 15px; }
+  .copy-btn {
+    background: #667eea;
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    margin-top: 12px;
+    font-family: inherit;
+  }
+
+  .price-input { position: relative; }
+  .price-input::before {
+    content: "฿";
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #65676b;
+    font-weight: 600;
+  }
+  .price-input input { padding-left: 28px; }
+
+  .form-section { display: none; }
+  .form-section.active { display: block; }
+
+  .back-btn {
+    background: #f0f2f5;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 13px;
+    cursor: pointer;
+    margin-bottom: 12px;
+    font-family: inherit;
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>📦 ฟอร์มรับฝาก</h1>
+  <p>Thunder Cash - เลือกประเภทสินค้า</p>
+</div>
+
+<!-- หน้าเลือกประเภท -->
+<div id="categoryPicker" class="card">
+  <h2>เลือกประเภทสินค้า</h2>
+  <div class="category-grid">
+    <div class="category-card top" onclick="selectCategory('iphone')"><span class="rank">#1</span><span class="emoji">📱</span><div class="name">iPhone</div></div>
+    <div class="category-card top" onclick="selectCategory('ipad')"><span class="rank">#2</span><span class="emoji">📲</span><div class="name">iPad</div></div>
+    <div class="category-card top" onclick="selectCategory('samsung')"><span class="rank">#3</span><span class="emoji">📱</span><div class="name">Samsung</div></div>
+    <div class="category-card" onclick="selectCategory('notebook')"><span class="rank">#4</span><span class="emoji">💻</span><div class="name">Notebook</div></div>
+    <div class="category-card" onclick="selectCategory('macbook')"><span class="rank">#5</span><span class="emoji">💻</span><div class="name">MacBook</div></div>
+    <div class="category-card" onclick="selectCategory('camera')"><span class="rank">#6</span><span class="emoji">📷</span><div class="name">กล้อง</div></div>
+    <div class="category-card" onclick="selectCategory('watch')"><span class="rank">#7</span><span class="emoji">⌚</span><div class="name">Apple Watch</div></div>
+    <div class="category-card" onclick="selectCategory('airpods')"><span class="rank">#8</span><span class="emoji">🎧</span><div class="name">AirPods/หูฟัง</div></div>
+    <div class="category-card" onclick="selectCategory('console')"><span class="rank">#9</span><span class="emoji">🎮</span><div class="name">เกม Console</div></div>
+    <div class="category-card" onclick="selectCategory('bag')"><span class="rank">#10</span><span class="emoji">👜</span><div class="name">กระเป๋าแบรนด์</div></div>
+  </div>
+</div>
+
+<!-- ฟอร์ม iPhone -->
+<div id="form-iphone" class="form-section">
+  <button class="back-btn" onclick="goBack()">← เปลี่ยนประเภท</button>
+  <form onsubmit="generatePost(event, 'iphone')">
+    <div class="card">
+      <h2><span class="num">1</span> 📱 iPhone</h2>
+      <div class="field"><label>เลขที่สัญญา *</label><input type="text" name="contract" placeholder="HKG-2960" required></div>
+      <div class="field"><label>รุ่น *</label><input type="text" name="model" placeholder="iPhone 16 Pro Max" required></div>
+      <div class="row">
+        <div class="field"><label>ความจุ *</label>
+          <select name="storage" required><option value="">--</option><option>64GB</option><option>128GB</option><option>256GB</option><option>512GB</option><option>1TB</option></select>
+        </div>
+        <div class="field"><label>สี *</label><input type="text" name="color" placeholder="Natural Titanium" required></div>
+      </div>
+      <div class="field"><label>เครื่องศูนย์ *</label>
+        <div class="radio-group">
+          <label><input type="radio" name="origin" value="ศูนย์ไทย (TH)" required><span>🇹🇭 ศูนย์ไทย</span></label>
+          <label><input type="radio" name="origin" value="เครื่องนอก"><span>🌏 นอก</span></label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="field"><label>🔋 แบต % *</label><input type="number" name="battery" min="0" max="100" placeholder="92" required></div>
+        <div class="field"><label>เกรดสภาพ *</label>
+          <div class="radio-group">
+            <label class="grade-A"><input type="radio" name="grade" value="A สวย" required><span>A</span></label>
+            <label class="grade-B"><input type="radio" name="grade" value="B มีรอย"><span>B</span></label>
+            <label class="grade-C"><input type="radio" name="grade" value="C มีตำหนิ"><span>C</span></label>
+          </div>
+        </div>
+      </div>
+      <div class="field"><label>ตำหนิ (ถ้ามี)</label><textarea name="defects" rows="2" placeholder="เช่น ขอบมีรอย"></textarea></div>
+      <div class="field"><label>อุปกรณ์ที่ได้</label>
+        <div class="checkbox-group">
+          <label><input type="checkbox" name="acc" value="กล่อง"><span>📦 กล่อง</span></label>
+          <label><input type="checkbox" name="acc" value="สายชาร์จ"><span>🔌 สายชาร์จ</span></label>
+          <label><input type="checkbox" name="acc" value="หัวชาร์จ"><span>⚡ หัวชาร์จ</span></label>
+        </div>
+      </div>
+      <div class="field"><label>ประกัน</label><input type="text" name="warranty" placeholder="เหลือถึง 01/05/69 / AppleCare+ / หมดประกัน"></div>
+    </div>
+    <div class="card"><h2><span class="num">2</span> 💰 ราคา</h2><div class="row">
+      <div class="field"><label>ยอดฝาก *</label><div class="price-input"><input type="number" name="pawn" required></div></div>
+      <div class="field"><label>ราคาขาย *</label><div class="price-input"><input type="number" name="sell" required></div></div>
+    </div></div>
+    <button type="submit" class="submit-btn">✅ บันทึก + สร้างโพสต์ FB</button>
+  </form>
+</div>
+
+<!-- ฟอร์ม iPad -->
+<div id="form-ipad" class="form-section">
+  <button class="back-btn" onclick="goBack()">← เปลี่ยนประเภท</button>
+  <form onsubmit="generatePost(event, 'ipad')">
+    <div class="card">
+      <h2><span class="num">1</span> 📲 iPad</h2>
+      <div class="field"><label>เลขที่สัญญา *</label><input type="text" name="contract" required></div>
+      <div class="field"><label>รุ่น *</label><input type="text" name="model" placeholder="iPad Air 5 / iPad Pro 12.9 M2" required></div>
+      <div class="row">
+        <div class="field"><label>ความจุ *</label><select name="storage" required><option value="">--</option><option>64GB</option><option>128GB</option><option>256GB</option><option>512GB</option><option>1TB</option><option>2TB</option></select></div>
+        <div class="field"><label>สี *</label><input type="text" name="color" required></div>
+      </div>
+      <div class="field"><label>การเชื่อมต่อ *</label>
+        <div class="radio-group">
+          <label><input type="radio" name="connect" value="Wi-Fi" required><span>📶 Wi-Fi</span></label>
+          <label><input type="radio" name="connect" value="Wi-Fi + Cellular"><span>📡 Wi-Fi + Cellular</span></label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="field"><label>🔋 แบต % *</label><input type="number" name="battery" min="0" max="100" required></div>
+        <div class="field"><label>เกรดสภาพ *</label>
+          <div class="radio-group">
+            <label class="grade-A"><input type="radio" name="grade" value="A สวย" required><span>A</span></label>
+            <label class="grade-B"><input type="radio" name="grade" value="B มีรอย"><span>B</span></label>
+            <label class="grade-C"><input type="radio" name="grade" value="C มีตำหนิ"><span>C</span></label>
+          </div>
+        </div>
+      </div>
+      <div class="field"><label>ตำหนิ (ถ้ามี)</label><textarea name="defects" rows="2" placeholder="เช่น เครื่องงอ, มีรอยรอบเครื่อง"></textarea></div>
+      <div class="field"><label>อุปกรณ์ที่ได้</label>
+        <div class="checkbox-group">
+          <label><input type="checkbox" name="acc" value="กล่อง"><span>📦 กล่อง</span></label>
+          <label><input type="checkbox" name="acc" value="สายชาร์จ"><span>🔌 สายชาร์จ</span></label>
+          <label><input type="checkbox" name="acc" value="หัวชาร์จ"><span>⚡ หัวชาร์จ</span></label>
+          <label><input type="checkbox" name="acc" value="Pencil"><span>✏️ Pencil</span></label>
+          <label><input type="checkbox" name="acc" value="Keyboard"><span>⌨️ Keyboard</span></label>
+          <label><input type="checkbox" name="acc" value="เคส"><span>🛡️ เคส</span></label>
+        </div>
+      </div>
+      <div class="field"><label>ประกัน</label><input type="text" name="warranty" placeholder="เหลือถึง 01/05/69 / AppleCare+ / หมดประกัน"></div>
+    </div>
+    <div class="card"><h2><span class="num">2</span> 💰 ราคา</h2><div class="row">
+      <div class="field"><label>ยอดฝาก *</label><div class="price-input"><input type="number" name="pawn" required></div></div>
+      <div class="field"><label>ราคาขาย *</label><div class="price-input"><input type="number" name="sell" required></div></div>
+    </div></div>
+    <button type="submit" class="submit-btn">✅ บันทึก + สร้างโพสต์ FB</button>
+  </form>
+</div>
+
+<!-- ฟอร์ม Samsung -->
+<div id="form-samsung" class="form-section">
+  <button class="back-btn" onclick="goBack()">← เปลี่ยนประเภท</button>
+  <form onsubmit="generatePost(event, 'samsung')">
+    <div class="card">
+      <h2><span class="num">1</span> 📱 Samsung Galaxy</h2>
+      <div class="field"><label>เลขที่สัญญา *</label><input type="text" name="contract" required></div>
+      <div class="row">
+        <div class="field"><label>รุ่น *</label><input type="text" name="model" placeholder="S24 Ultra / Z Fold 6" required></div>
+        <div class="field"><label>ความจุ *</label><select name="storage" required><option value="">--</option><option>128GB</option><option>256GB</option><option>512GB</option><option>1TB</option></select></div>
+      </div>
+      <div class="row">
+        <div class="field"><label>สี *</label><input type="text" name="color" required></div>
+        <div class="field"><label>RAM</label><select name="ram"><option value="">--</option><option>8GB</option><option>12GB</option><option>16GB</option></select></div>
+      </div>
+      <div class="row">
+        <div class="field"><label>🔋 แบต % *</label><input type="number" name="battery" min="0" max="100" required></div>
+        <div class="field"><label>เกรดสภาพ *</label>
+          <div class="radio-group">
+            <label class="grade-A"><input type="radio" name="grade" value="A สวย" required><span>A</span></label>
+            <label class="grade-B"><input type="radio" name="grade" value="B มีรอย"><span>B</span></label>
+            <label class="grade-C"><input type="radio" name="grade" value="C มีตำหนิ"><span>C</span></label>
+          </div>
+        </div>
+      </div>
+      <div class="field"><label>ตำหนิ (ถ้ามี)</label><textarea name="defects" rows="2"></textarea></div>
+      <div class="field"><label>อุปกรณ์ที่ได้</label>
+        <div class="checkbox-group">
+          <label><input type="checkbox" name="acc" value="กล่อง"><span>📦 กล่อง</span></label>
+          <label><input type="checkbox" name="acc" value="สายชาร์จ"><span>🔌 สายชาร์จ</span></label>
+          <label><input type="checkbox" name="acc" value="หัวชาร์จ"><span>⚡ หัวชาร์จ</span></label>
+          <label><input type="checkbox" name="acc" value="S Pen"><span>✏️ S Pen</span></label>
+        </div>
+      </div>
+      <div class="field"><label>ประกัน</label><input type="text" name="warranty" placeholder="เหลือถึง 01/05/69 / Samsung Care+ / หมดประกัน"></div>
+    </div>
+    <div class="card"><h2><span class="num">2</span> 💰 ราคา</h2><div class="row">
+      <div class="field"><label>ยอดฝาก *</label><div class="price-input"><input type="number" name="pawn" required></div></div>
+      <div class="field"><label>ราคาขาย *</label><div class="price-input"><input type="number" name="sell" required></div></div>
+    </div></div>
+    <button type="submit" class="submit-btn">✅ บันทึก + สร้างโพสต์ FB</button>
+  </form>
+</div>
+
+<!-- ฟอร์ม MacBook -->
+<div id="form-macbook" class="form-section">
+  <button class="back-btn" onclick="goBack()">← เปลี่ยนประเภท</button>
+  <form onsubmit="generatePost(event, 'macbook')">
+    <div class="card">
+      <h2><span class="num">1</span> 💻 MacBook</h2>
+      <div class="field"><label>เลขที่สัญญา *</label><input type="text" name="contract" required></div>
+      <div class="row">
+        <div class="field"><label>รุ่น *</label><input type="text" name="model" placeholder="MacBook Air M3 13" required></div>
+        <div class="field"><label>ปี *</label><input type="text" name="year" placeholder="2024" required></div>
+      </div>
+      <div class="row">
+        <div class="field"><label>RAM *</label><select name="ram" required><option value="">--</option><option>8GB</option><option>16GB</option><option>24GB</option><option>32GB</option><option>48GB</option><option>64GB</option><option>96GB</option><option>128GB</option></select></div>
+        <div class="field"><label>SSD *</label><select name="ssd" required><option value="">--</option><option>256GB</option><option>512GB</option><option>1TB</option><option>2TB</option><option>4TB</option><option>8TB</option></select></div>
+      </div>
+      <div class="row">
+        <div class="field"><label>สี *</label><input type="text" name="color" placeholder="Space Gray" required></div>
+        <div class="field"><label>🔋 Cycle Count</label><input type="number" name="cycle" placeholder="150"></div>
+      </div>
+      <div class="row">
+        <div class="field"><label>🔋 แบต %</label><input type="number" name="battery" min="0" max="100"></div>
+        <div class="field"><label>เกรดสภาพ *</label>
+          <div class="radio-group">
+            <label class="grade-A"><input type="radio" name="grade" value="A สวย" required><span>A</span></label>
+            <label class="grade-B"><input type="radio" name="grade" value="B มีรอย"><span>B</span></label>
+            <label class="grade-C"><input type="radio" name="grade" value="C มีตำหนิ"><span>C</span></label>
+          </div>
+        </div>
+      </div>
+      <div class="field"><label>ตำหนิ (ถ้ามี)</label><textarea name="defects" rows="2" placeholder="เช่น Dent ที่ขอบ, Pixel เสีย"></textarea></div>
+      <div class="field"><label>อุปกรณ์ที่ได้</label>
+        <div class="checkbox-group">
+          <label><input type="checkbox" name="acc" value="กล่อง"><span>📦 กล่อง</span></label>
+          <label><input type="checkbox" name="acc" value="สายชาร์จ"><span>🔌 สายชาร์จ</span></label>
+          <label><input type="checkbox" name="acc" value="Adapter"><span>🔋 Adapter</span></label>
+          <label><input type="checkbox" name="acc" value="กระเป๋า"><span>💼 กระเป๋า</span></label>
+        </div>
+      </div>
+      <div class="field"><label>ประกัน</label><input type="text" name="warranty" placeholder="เหลือถึง 01/05/69 หรือ หมดประกัน"></div>
+    </div>
+    <div class="card"><h2><span class="num">2</span> 💰 ราคา</h2><div class="row">
+      <div class="field"><label>ยอดฝาก *</label><div class="price-input"><input type="number" name="pawn" required></div></div>
+      <div class="field"><label>ราคาขาย *</label><div class="price-input"><input type="number" name="sell" required></div></div>
+    </div></div>
+    <button type="submit" class="submit-btn">✅ บันทึก + สร้างโพสต์ FB</button>
+  </form>
+</div>
+
+<!-- ฟอร์ม Camera -->
+<div id="form-camera" class="form-section">
+  <button class="back-btn" onclick="goBack()">← เปลี่ยนประเภท</button>
+  <form onsubmit="generatePost(event, 'camera')">
+    <div class="card">
+      <h2><span class="num">1</span> 📷 กล้อง</h2>
+      <div class="field"><label>เลขที่สัญญา *</label><input type="text" name="contract" required></div>
+      <div class="row">
+        <div class="field"><label>ยี่ห้อ *</label><input type="text" name="brand" placeholder="Canon / Sony / Fuji" required></div>
+        <div class="field"><label>รุ่น Body *</label><input type="text" name="model" placeholder="EOS R6 / α7 IV" required></div>
+      </div>
+      <div class="row">
+        <div class="field"><label>ประเภท *</label>
+          <div class="radio-group">
+            <label><input type="radio" name="type" value="Body only" required><span>Body</span></label>
+            <label><input type="radio" name="type" value="Body + Lens"><span>Body+Lens</span></label>
+          </div>
+        </div>
+        <div class="field"><label>Shutter Count</label><input type="number" name="shutter" placeholder="5000"></div>
+      </div>
+      <div class="field"><label>Lens (ถ้ามี)</label><input type="text" name="lens" placeholder="RF 24-105mm f/4L"></div>
+      <div class="row">
+        <div class="field"><label>เกรดสภาพ *</label>
+          <div class="radio-group">
+            <label class="grade-A"><input type="radio" name="grade" value="A สวย" required><span>A</span></label>
+            <label class="grade-B"><input type="radio" name="grade" value="B มีรอย"><span>B</span></label>
+            <label class="grade-C"><input type="radio" name="grade" value="C มีตำหนิ"><span>C</span></label>
+          </div>
+        </div>
+        <div class="field"><label>เครื่องศูนย์</label>
+          <div class="radio-group">
+            <label><input type="radio" name="origin" value="ศูนย์ไทย"><span>🇹🇭 ไทย</span></label>
+            <label><input type="radio" name="origin" value="นอก"><span>🌏 นอก</span></label>
+          </div>
+        </div>
+      </div>
+      <div class="field"><label>ตำหนิ (ถ้ามี)</label><textarea name="defects" rows="2" placeholder="เช่น ราเลนส์, เซ็นเซอร์มีฝุ่น"></textarea></div>
+      <div class="field"><label>อุปกรณ์ที่ได้</label>
+        <div class="checkbox-group">
+          <label><input type="checkbox" name="acc" value="กล่อง"><span>📦 กล่อง</span></label>
+          <label><input type="checkbox" name="acc" value="แบต"><span>🔋 แบต</span></label>
+          <label><input type="checkbox" name="acc" value="ที่ชาร์จ"><span>⚡ ที่ชาร์จ</span></label>
+          <label><input type="checkbox" name="acc" value="สายคล้อง"><span>🪢 สายคล้อง</span></label>
+          <label><input type="checkbox" name="acc" value="Memory Card"><span>💾 SD Card</span></label>
+          <label><input type="checkbox" name="acc" value="กระเป๋า"><span>💼 กระเป๋า</span></label>
+        </div>
+      </div>
+      <div class="field"><label>ประกัน</label><input type="text" name="warranty" placeholder="เหลือถึง 01/05/69 / หมดประกัน"></div>
+    </div>
+    <div class="card"><h2><span class="num">2</span> 💰 ราคา</h2><div class="row">
+      <div class="field"><label>ยอดฝาก *</label><div class="price-input"><input type="number" name="pawn" required></div></div>
+      <div class="field"><label>ราคาขาย *</label><div class="price-input"><input type="number" name="sell" required></div></div>
+    </div></div>
+    <button type="submit" class="submit-btn">✅ บันทึก + สร้างโพสต์ FB</button>
+  </form>
+</div>
+
+<!-- ฟอร์ม Apple Watch -->
+<div id="form-watch" class="form-section">
+  <button class="back-btn" onclick="goBack()">← เปลี่ยนประเภท</button>
+  <form onsubmit="generatePost(event, 'watch')">
+    <div class="card">
+      <h2><span class="num">1</span> ⌚ Apple Watch</h2>
+      <div class="field"><label>เลขที่สัญญา *</label><input type="text" name="contract" required></div>
+      <div class="row">
+        <div class="field"><label>รุ่น *</label><input type="text" name="model" placeholder="Series 9 / Ultra 2 / SE 2" required></div>
+        <div class="field"><label>ขนาด *</label><select name="size" required><option value="">--</option><option>40mm</option><option>41mm</option><option>42mm</option><option>44mm</option><option>45mm</option><option>46mm</option><option>49mm</option></select></div>
+      </div>
+      <div class="row">
+        <div class="field"><label>สี *</label><input type="text" name="color" placeholder="Midnight" required></div>
+        <div class="field"><label>การเชื่อมต่อ *</label>
+          <div class="radio-group">
+            <label><input type="radio" name="connect" value="GPS" required><span>GPS</span></label>
+            <label><input type="radio" name="connect" value="GPS+Cellular"><span>+Cellular</span></label>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="field"><label>🔋 แบต % *</label><input type="number" name="battery" min="0" max="100" required></div>
+        <div class="field"><label>เกรดสภาพ *</label>
+          <div class="radio-group">
+            <label class="grade-A"><input type="radio" name="grade" value="A สวย" required><span>A</span></label>
+            <label class="grade-B"><input type="radio" name="grade" value="B มีรอย"><span>B</span></label>
+            <label class="grade-C"><input type="radio" name="grade" value="C มีตำหนิ"><span>C</span></label>
+          </div>
+        </div>
+      </div>
+      <div class="field"><label>ตำหนิ (ถ้ามี)</label><textarea name="defects" rows="2"></textarea></div>
+      <div class="field"><label>อุปกรณ์ที่ได้</label>
+        <div class="checkbox-group">
+          <label><input type="checkbox" name="acc" value="กล่อง"><span>📦 กล่อง</span></label>
+          <label><input type="checkbox" name="acc" value="สาย"><span>⌚ สาย</span></label>
+          <label><input type="checkbox" name="acc" value="ที่ชาร์จ"><span>⚡ ที่ชาร์จ</span></label>
+        </div>
+      </div>
+      <div class="field"><label>ประกัน</label><input type="text" name="warranty" placeholder="เหลือถึง 01/05/69 / AppleCare+ / หมดประกัน"></div>
+    </div>
+    <div class="card"><h2><span class="num">2</span> 💰 ราคา</h2><div class="row">
+      <div class="field"><label>ยอดฝาก *</label><div class="price-input"><input type="number" name="pawn" required></div></div>
+      <div class="field"><label>ราคาขาย *</label><div class="price-input"><input type="number" name="sell" required></div></div>
+    </div></div>
+    <button type="submit" class="submit-btn">✅ บันทึก + สร้างโพสต์ FB</button>
+  </form>
+</div>
+
+<!-- ฟอร์ม AirPods/หูฟัง -->
+<div id="form-airpods" class="form-section">
+  <button class="back-btn" onclick="goBack()">← เปลี่ยนประเภท</button>
+  <form onsubmit="generatePost(event, 'airpods')">
+    <div class="card">
+      <h2><span class="num">1</span> 🎧 AirPods / หูฟัง</h2>
+      <div class="field"><label>เลขที่สัญญา *</label><input type="text" name="contract" required></div>
+      <div class="row">
+        <div class="field"><label>ยี่ห้อ *</label><input type="text" name="brand" placeholder="Apple / Sony / Bose" required></div>
+        <div class="field"><label>รุ่น *</label><input type="text" name="model" placeholder="AirPods Pro 2 / WH-1000XM5" required></div>
+      </div>
+      <div class="row">
+        <div class="field"><label>สี</label><input type="text" name="color"></div>
+        <div class="field"><label>เกรดสภาพ *</label>
+          <div class="radio-group">
+            <label class="grade-A"><input type="radio" name="grade" value="A สวย" required><span>A</span></label>
+            <label class="grade-B"><input type="radio" name="grade" value="B มีรอย"><span>B</span></label>
+            <label class="grade-C"><input type="radio" name="grade" value="C มีตำหนิ"><span>C</span></label>
+          </div>
+        </div>
+      </div>
+      <div class="field"><label>ตำหนิ / สภาพแบต</label><textarea name="defects" rows="2" placeholder="เช่น แบต L ใช้ได้สั้น, จุก S หาย"></textarea></div>
+      <div class="field"><label>อุปกรณ์ที่ได้</label>
+        <div class="checkbox-group">
+          <label><input type="checkbox" name="acc" value="กล่อง"><span>📦 กล่อง</span></label>
+          <label><input type="checkbox" name="acc" value="เคสชาร์จ"><span>🔋 เคสชาร์จ</span></label>
+          <label><input type="checkbox" name="acc" value="สายชาร์จ"><span>🔌 สายชาร์จ</span></label>
+          <label><input type="checkbox" name="acc" value="จุกหู"><span>👂 จุกหู</span></label>
+          <label><input type="checkbox" name="acc" value="กระเป๋า"><span>💼 กระเป๋า</span></label>
+        </div>
+      </div>
+      <div class="field"><label>ประกัน</label><input type="text" name="warranty" placeholder="เหลือถึง 01/05/69 / AppleCare+ / หมดประกัน"></div>
+    </div>
+    <div class="card"><h2><span class="num">2</span> 💰 ราคา</h2><div class="row">
+      <div class="field"><label>ยอดฝาก *</label><div class="price-input"><input type="number" name="pawn" required></div></div>
+      <div class="field"><label>ราคาขาย *</label><div class="price-input"><input type="number" name="sell" required></div></div>
+    </div></div>
+    <button type="submit" class="submit-btn">✅ บันทึก + สร้างโพสต์ FB</button>
+  </form>
+</div>
+
+<!-- ฟอร์ม Console -->
+<div id="form-console" class="form-section">
+  <button class="back-btn" onclick="goBack()">← เปลี่ยนประเภท</button>
+  <form onsubmit="generatePost(event, 'console')">
+    <div class="card">
+      <h2><span class="num">1</span> 🎮 เกม Console</h2>
+      <div class="field"><label>เลขที่สัญญา *</label><input type="text" name="contract" required></div>
+      <div class="row">
+        <div class="field"><label>ยี่ห้อ/รุ่น *</label><input type="text" name="model" placeholder="PS5 Slim / Switch OLED" required></div>
+        <div class="field"><label>ความจุ</label><input type="text" name="storage" placeholder="1TB"></div>
+      </div>
+      <div class="field"><label>เกรดสภาพ *</label>
+        <div class="radio-group">
+          <label class="grade-A"><input type="radio" name="grade" value="A สวย" required><span>A</span></label>
+          <label class="grade-B"><input type="radio" name="grade" value="B มีรอย"><span>B</span></label>
+          <label class="grade-C"><input type="radio" name="grade" value="C มีตำหนิ"><span>C</span></label>
+        </div>
+      </div>
+      <div class="field"><label>ตำหนิ (ถ้ามี)</label><textarea name="defects" rows="2"></textarea></div>
+      <div class="field"><label>อุปกรณ์ที่ได้</label>
+        <div class="checkbox-group">
+          <label><input type="checkbox" name="acc" value="กล่อง"><span>📦 กล่อง</span></label>
+          <label><input type="checkbox" name="acc" value="จอย"><span>🎮 จอย</span></label>
+          <label><input type="checkbox" name="acc" value="สาย HDMI"><span>📺 HDMI</span></label>
+          <label><input type="checkbox" name="acc" value="สายชาร์จ"><span>🔌 สายชาร์จ</span></label>
+          <label><input type="checkbox" name="acc" value="Dock"><span>🔌 Dock</span></label>
+          <label><input type="checkbox" name="acc" value="แผ่นเกม"><span>💿 เกม</span></label>
+        </div>
+      </div>
+      <div class="field"><label>ประกัน</label><input type="text" name="warranty" placeholder="เหลือถึง 01/05/69 / หมดประกัน"></div>
+    </div>
+    <div class="card"><h2><span class="num">2</span> 💰 ราคา</h2><div class="row">
+      <div class="field"><label>ยอดฝาก *</label><div class="price-input"><input type="number" name="pawn" required></div></div>
+      <div class="field"><label>ราคาขาย *</label><div class="price-input"><input type="number" name="sell" required></div></div>
+    </div></div>
+    <button type="submit" class="submit-btn">✅ บันทึก + สร้างโพสต์ FB</button>
+  </form>
+</div>
+
+<!-- ฟอร์ม กระเป๋าแบรนด์ -->
+<div id="form-bag" class="form-section">
+  <button class="back-btn" onclick="goBack()">← เปลี่ยนประเภท</button>
+  <form onsubmit="generatePost(event, 'bag')">
+    <div class="card">
+      <h2><span class="num">1</span> 👜 กระเป๋าแบรนด์</h2>
+      <div class="field"><label>เลขที่สัญญา *</label><input type="text" name="contract" required></div>
+      <div class="row">
+        <div class="field"><label>ยี่ห้อ *</label><input type="text" name="brand" placeholder="Louis Vuitton / Chanel" required></div>
+        <div class="field"><label>รุ่น/Style *</label><input type="text" name="model" placeholder="Neverfull MM / Birkin 30" required></div>
+      </div>
+      <div class="row">
+        <div class="field"><label>สี *</label><input type="text" name="color" required></div>
+        <div class="field"><label>วัสดุ</label><input type="text" name="material" placeholder="Monogram / Caviar"></div>
+      </div>
+      <div class="row">
+        <div class="field"><label>Date Code / Serial</label><input type="text" name="serial"></div>
+        <div class="field"><label>ปี (ถ้าทราบ)</label><input type="text" name="year"></div>
+      </div>
+      <div class="field"><label>ความแท้ *</label>
+        <div class="radio-group">
+          <label><input type="radio" name="auth" value="ของแท้-มีใบเซอร์" required><span>✅ แท้-มีใบ</span></label>
+          <label><input type="radio" name="auth" value="ของแท้-ไม่มีใบ"><span>✅ แท้-ไม่มีใบ</span></label>
+          <label><input type="radio" name="auth" value="ต้องตรวจเพิ่ม"><span>⚠️ ตรวจเพิ่ม</span></label>
+        </div>
+      </div>
+      <div class="field"><label>เกรดสภาพ *</label>
+        <div class="radio-group">
+          <label class="grade-A"><input type="radio" name="grade" value="A สวย" required><span>A</span></label>
+          <label class="grade-B"><input type="radio" name="grade" value="B มีรอย"><span>B</span></label>
+          <label class="grade-C"><input type="radio" name="grade" value="C มีตำหนิ"><span>C</span></label>
+        </div>
+      </div>
+      <div class="field"><label>ตำหนิ (ถ้ามี)</label><textarea name="defects" rows="2" placeholder="เช่น มุมถลอก, หนังลอก, ซิปเสีย"></textarea></div>
+      <div class="field"><label>อุปกรณ์ที่ได้</label>
+        <div class="checkbox-group">
+          <label><input type="checkbox" name="acc" value="ถุงผ้า"><span>👝 ถุงผ้า</span></label>
+          <label><input type="checkbox" name="acc" value="กล่อง"><span>📦 กล่อง</span></label>
+          <label><input type="checkbox" name="acc" value="ใบเซอร์"><span>📜 ใบเซอร์</span></label>
+          <label><input type="checkbox" name="acc" value="การ์ด"><span>💳 การ์ด</span></label>
+          <label><input type="checkbox" name="acc" value="สายสะพาย"><span>🪢 สายสะพาย</span></label>
+          <label><input type="checkbox" name="acc" value="กุญแจ"><span>🔑 กุญแจ</span></label>
+          <label><input type="checkbox" name="acc" value="ใบเสร็จ"><span>🧾 ใบเสร็จ</span></label>
+        </div>
+      </div>
+      <div class="field"><label>ประกัน / Authentic</label><input type="text" name="warranty" placeholder="ใบเซอร์ของแท้ / ประกัน 1 ปี"></div>
+    </div>
+    <div class="card"><h2><span class="num">2</span> 💰 ราคา</h2><div class="row">
+      <div class="field"><label>ยอดฝาก *</label><div class="price-input"><input type="number" name="pawn" required></div></div>
+      <div class="field"><label>ราคาขาย *</label><div class="price-input"><input type="number" name="sell" required></div></div>
+    </div></div>
+    <button type="submit" class="submit-btn">✅ บันทึก + สร้างโพสต์ FB</button>
+  </form>
+</div>
+
+<!-- ฟอร์ม Notebook -->
+<div id="form-notebook" class="form-section">
+  <button class="back-btn" onclick="goBack()">← เปลี่ยนประเภท</button>
+  <form onsubmit="generatePost(event, 'notebook')">
+    <div class="card">
+      <h2><span class="num">1</span> 💻 Notebook</h2>
+      <div class="field"><label>เลขที่สัญญา *</label><input type="text" name="contract" required></div>
+      <div class="row">
+        <div class="field"><label>ยี่ห้อ *</label><input type="text" name="brand" placeholder="ASUS / Dell / Lenovo / HP / Acer / MSI" required></div>
+        <div class="field"><label>รุ่น *</label><input type="text" name="model" placeholder="ROG Strix G16 / ThinkPad X1" required></div>
+      </div>
+      <div class="row">
+        <div class="field"><label>ขนาดจอ</label><select name="screen"><option value="">--</option><option>13"</option><option>14"</option><option>15.6"</option><option>16"</option><option>17"</option></select></div>
+        <div class="field"><label>ปี</label><input type="text" name="year" placeholder="2024"></div>
+      </div>
+      <div class="field"><label>CPU *</label><input type="text" name="cpu" placeholder="Intel i7-13700H / Ryzen 7 7840HS" required></div>
+      <div class="row">
+        <div class="field"><label>RAM *</label><select name="ram" required><option value="">--</option><option>4GB</option><option>8GB</option><option>16GB</option><option>32GB</option><option>64GB</option><option>128GB</option></select></div>
+        <div class="field"><label>SSD/HDD *</label><select name="storage" required><option value="">--</option><option>128GB SSD</option><option>256GB SSD</option><option>512GB SSD</option><option>1TB SSD</option><option>2TB SSD</option><option>500GB HDD</option><option>1TB HDD</option></select></div>
+      </div>
+      <div class="field"><label>การ์ดจอ (ถ้ามี)</label><input type="text" name="gpu" placeholder="RTX 4060 / RTX 3050 / Onboard"></div>
+      <div class="row">
+        <div class="field"><label>🔋 แบต %</label><input type="number" name="battery" min="0" max="100" placeholder="85"></div>
+        <div class="field"><label>เกรดสภาพ *</label>
+          <div class="radio-group">
+            <label class="grade-A"><input type="radio" name="grade" value="A สวย" required><span>A</span></label>
+            <label class="grade-B"><input type="radio" name="grade" value="B มีรอย"><span>B</span></label>
+            <label class="grade-C"><input type="radio" name="grade" value="C มีตำหนิ"><span>C</span></label>
+          </div>
+        </div>
+      </div>
+      <div class="field"><label>ตำหนิ (ถ้ามี)</label><textarea name="defects" rows="2" placeholder="เช่น Pixel เสีย, ขอบมีรอย, คีย์บอร์ดบางตัวกด"></textarea></div>
+      <div class="field"><label>อุปกรณ์ที่ได้</label>
+        <div class="checkbox-group">
+          <label><input type="checkbox" name="acc" value="กล่อง"><span>📦 กล่อง</span></label>
+          <label><input type="checkbox" name="acc" value="Adapter"><span>🔌 Adapter</span></label>
+          <label><input type="checkbox" name="acc" value="กระเป๋า"><span>💼 กระเป๋า</span></label>
+          <label><input type="checkbox" name="acc" value="เมาส์"><span>🖱️ เมาส์</span></label>
+        </div>
+      </div>
+      <div class="field"><label>ประกัน</label><input type="text" name="warranty" placeholder="เหลือถึง 01/05/69 หรือ หมดประกัน"></div>
+    </div>
+    <div class="card"><h2><span class="num">2</span> 💰 ราคา</h2><div class="row">
+      <div class="field"><label>ยอดฝาก *</label><div class="price-input"><input type="number" name="pawn" required></div></div>
+      <div class="field"><label>ราคาขาย *</label><div class="price-input"><input type="number" name="sell" required></div></div>
+    </div></div>
+    <button type="submit" class="submit-btn">✅ บันทึก + สร้างโพสต์ FB</button>
+  </form>
+</div>
+
+<!-- Preview -->
+<div class="preview" id="preview">
+  <h3>📋 ข้อความโพสต์ FB (ก๊อปได้เลย)</h3>
+  <div id="previewText"></div>
+  <button class="copy-btn" onclick="copyPost()">📋 ก๊อปข้อความ</button>
+</div>
+
+<script>
+function selectCategory(cat) {
+  document.getElementById('categoryPicker').style.display = 'none';
+  document.querySelectorAll('.form-section').forEach(s => s.classList.remove('active'));
+  document.getElementById('form-' + cat).classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function goBack() {
+  document.getElementById('categoryPicker').style.display = 'block';
+  document.querySelectorAll('.form-section').forEach(s => s.classList.remove('active'));
+  document.getElementById('preview').classList.remove('show');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function getFormData(form) {
+  const d = {};
+  for (const el of form.elements) {
+    if (!el.name) continue;
+    if (el.type === 'checkbox') {
+      if (el.checked) (d[el.name] = d[el.name] || []).push(el.value);
+    } else if (el.type === 'radio') {
+      if (el.checked) d[el.name] = el.value;
+    } else if (el.value) d[el.name] = el.value;
+  }
+  return d;
+}
+
+function generatePost(e, category) {
+  e.preventDefault();
+  const d = getFormData(e.target);
+  const acc = (d.acc || []).join(' + ') || 'เครื่องเปล่า';
+  const defect = d.defects ? `\n⚠️ ${d.defects}` : '';
+  let post = '';
+
+  const warranty = d.warranty ? `\n🛡️ ประกัน: ${d.warranty}` : '';
+
+  if (category === 'iphone') {
+    post = `📱 ${d.model} ${d.storage} สี ${d.color}
+✅ ${d.origin}
+🔋 แบต ${d.battery}%
+💎 เกรด ${d.grade}${defect}
+📦 ${acc}${warranty}
+💰 ${Number(d.sell).toLocaleString()} บาท
+📍 Thunder Cash ห้วยขวาง
+📞 inbox สอบถาม
+
+#iPhoneมือสอง #${d.model.replace(/\s/g,'')} #ThunderCash`;
+  }
+  else if (category === 'ipad') {
+    post = `📲 ${d.model} ${d.storage} ${d.connect} สี ${d.color}
+🔋 แบต ${d.battery}%
+💎 เกรด ${d.grade}${defect}
+📦 ${acc}${warranty}
+💰 ${Number(d.sell).toLocaleString()} บาท
+📍 Thunder Cash ห้วยขวาง
+
+#iPadมือสอง #ThunderCash`;
+  }
+  else if (category === 'samsung') {
+    post = `📱 Samsung Galaxy ${d.model} ${d.storage}${d.ram ? ' ('+d.ram+' RAM)' : ''} สี ${d.color}
+🔋 แบต ${d.battery}%
+💎 เกรด ${d.grade}${defect}
+📦 ${acc}${warranty}
+💰 ${Number(d.sell).toLocaleString()} บาท
+📍 Thunder Cash ห้วยขวาง
+
+#Samsungมือสอง #Galaxy${d.model.replace(/\s/g,'')} #ThunderCash`;
+  }
+  else if (category === 'macbook') {
+    post = `💻 ${d.model} ปี ${d.year}
+⚙️ RAM ${d.ram} / SSD ${d.ssd} / สี ${d.color}
+🔋 แบต ${d.battery || '-'}% ${d.cycle ? '(Cycle '+d.cycle+')' : ''}
+💎 เกรด ${d.grade}${defect}
+📦 ${acc}${warranty}
+💰 ${Number(d.sell).toLocaleString()} บาท
+📍 Thunder Cash ห้วยขวาง
+
+#MacBookมือสอง #ThunderCash`;
+  }
+  else if (category === 'camera') {
+    post = `📷 ${d.brand} ${d.model} (${d.type})
+${d.lens ? '🔭 Lens: ' + d.lens : ''}
+${d.shutter ? '📸 Shutter: ' + d.shutter : ''}
+${d.origin ? '✅ ' + d.origin : ''}
+💎 เกรด ${d.grade}${defect}
+📦 ${acc}${warranty}
+💰 ${Number(d.sell).toLocaleString()} บาท
+📍 Thunder Cash ห้วยขวาง
+
+#กล้องมือสอง #${d.brand} #ThunderCash`;
+  }
+  else if (category === 'watch') {
+    post = `⌚ Apple Watch ${d.model} ${d.size} ${d.connect}
+🎨 สี ${d.color}
+🔋 แบต ${d.battery}%
+💎 เกรด ${d.grade}${defect}
+📦 ${acc}${warranty}
+💰 ${Number(d.sell).toLocaleString()} บาท
+📍 Thunder Cash ห้วยขวาง
+
+#AppleWatchมือสอง #ThunderCash`;
+  }
+  else if (category === 'airpods') {
+    post = `🎧 ${d.brand} ${d.model}${d.color ? ' สี '+d.color : ''}
+💎 เกรด ${d.grade}${defect}
+📦 ${acc}${warranty}
+💰 ${Number(d.sell).toLocaleString()} บาท
+📍 Thunder Cash ห้วยขวาง
+
+#${d.brand}มือสอง #ThunderCash`;
+  }
+  else if (category === 'console') {
+    post = `🎮 ${d.model}${d.storage ? ' '+d.storage : ''}
+💎 เกรด ${d.grade}${defect}
+📦 ${acc}${warranty}
+💰 ${Number(d.sell).toLocaleString()} บาท
+📍 Thunder Cash ห้วยขวาง
+
+#เกมมือสอง #${d.model.replace(/\s/g,'')} #ThunderCash`;
+  }
+  else if (category === 'notebook') {
+    const screenText = d.screen ? ' ' + d.screen : '';
+    post = `💻 ${d.brand} ${d.model}${screenText}${d.year ? ' ปี '+d.year : ''}
+⚙️ ${d.cpu}
+🧠 RAM ${d.ram} / ${d.storage}${d.gpu ? '\n🎮 GPU: '+d.gpu : ''}
+${d.battery ? '🔋 แบต '+d.battery+'%' : ''}
+💎 เกรด ${d.grade}${defect}
+📦 ${acc}${warranty}
+💰 ${Number(d.sell).toLocaleString()} บาท
+📍 Thunder Cash ห้วยขวาง
+
+#Notebookมือสอง #${d.brand} #ThunderCash`;
+  }
+  else if (category === 'bag') {
+    post = `👜 ${d.brand} ${d.model}
+🎨 สี ${d.color}${d.material ? ' / '+d.material : ''}
+${d.year ? '📅 ปี '+d.year : ''}
+✅ ${d.auth}
+💎 เกรด ${d.grade}${defect}
+📦 ${acc}${warranty}
+💰 ${Number(d.sell).toLocaleString()} บาท
+📍 Thunder Cash ห้วยขวาง
+📞 inbox ขอรูปเพิ่มได้
+
+#กระเป๋าแบรนด์มือสอง #${d.brand.replace(/\s/g,'')} #ThunderCash`;
+  }
+
+  document.getElementById('previewText').textContent = post.trim();
+  document.getElementById('preview').classList.add('show');
+  document.getElementById('preview').scrollIntoView({ behavior: 'smooth' });
+}
+
+function copyPost() {
+  const text = document.getElementById('previewText').textContent;
+  navigator.clipboard.writeText(text).then(() => alert('✅ ก๊อปแล้ว!'));
+}
+</script>
+
+</body>
+</html>
