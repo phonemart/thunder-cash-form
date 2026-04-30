@@ -200,6 +200,87 @@
     margin-bottom: 12px;
     font-family: inherit;
   }
+
+  .section-h {
+    font-size: 14px;
+    font-weight: 700;
+    color: #1c1e21;
+    margin-top: 18px;
+    margin-bottom: 10px;
+  }
+  .section-h .hint {
+    font-weight: 400;
+    color: #65676b;
+    font-size: 12px;
+    margin-left: 4px;
+  }
+  .defect-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    border: 1.5px solid #dddfe2;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    background: white;
+  }
+  .defect-row:has(input[type="checkbox"]:checked),
+  .defect-row:has(input[type="radio"]:checked) {
+    border-color: #ff9800;
+    background: #fff8e1;
+  }
+  .defect-row > label {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    margin: 0;
+  }
+  .defect-row > label > input { margin: 0; }
+  .defect-row input[type="number"],
+  .defect-row input[type="text"] {
+    width: 110px;
+    padding: 7px 10px;
+    border: 1.5px solid #dddfe2;
+    border-radius: 6px;
+    font-size: 13px;
+    font-family: inherit;
+  }
+  .defect-row .unit {
+    color: #65676b;
+    font-size: 13px;
+  }
+
+  .result-box {
+    padding: 18px;
+    border-radius: 12px;
+    text-align: center;
+    margin-top: 16px;
+    margin-bottom: 12px;
+    border: 2px solid;
+    transition: all 0.2s;
+  }
+  .result-box.grade-A { background: #e8f5e9; border-color: #4caf50; color: #2e7d32; }
+  .result-box.grade-B { background: #fff3e0; border-color: #ff9800; color: #e65100; }
+  .result-box.grade-C { background: #ffebee; border-color: #f44336; color: #c62828; }
+  .result-box .grade-text { font-size: 22px; font-weight: 700; }
+  .result-box .price-text { font-size: 17px; font-weight: 600; margin-top: 8px; }
+  .result-box .price-text input {
+    display: inline-block;
+    width: 140px;
+    text-align: center;
+    font-size: 17px;
+    font-weight: 700;
+    border: 1.5px solid rgba(0,0,0,0.15);
+    border-radius: 6px;
+    padding: 5px 8px;
+    background: rgba(255,255,255,0.85);
+    font-family: inherit;
+    color: inherit;
+  }
 </style>
 </head>
 <body>
@@ -213,32 +294,37 @@
 <div id="categoryPicker" class="card">
   <h2>เลือกประเภทสินค้า</h2>
   <div class="category-grid">
-    <div class="category-card top" onclick="selectCategory('iphone')"><span class="rank">#1</span><span class="emoji">📱</span><div class="name">iPhone</div></div>
-    <div class="category-card top" onclick="selectCategory('ipad')"><span class="rank">#2</span><span class="emoji">📲</span><div class="name">iPad</div></div>
-    <div class="category-card top" onclick="selectCategory('samsung')"><span class="rank">#3</span><span class="emoji">📱</span><div class="name">Samsung</div></div>
-    <div class="category-card" onclick="selectCategory('notebook')"><span class="rank">#4</span><span class="emoji">💻</span><div class="name">Notebook</div></div>
-    <div class="category-card" onclick="selectCategory('macbook')"><span class="rank">#5</span><span class="emoji">💻</span><div class="name">MacBook</div></div>
-    <div class="category-card" onclick="selectCategory('camera')"><span class="rank">#6</span><span class="emoji">📷</span><div class="name">กล้อง</div></div>
-    <div class="category-card" onclick="selectCategory('watch')"><span class="rank">#7</span><span class="emoji">⌚</span><div class="name">Apple Watch</div></div>
-    <div class="category-card" onclick="selectCategory('airpods')"><span class="rank">#8</span><span class="emoji">🎧</span><div class="name">AirPods/หูฟัง</div></div>
-    <div class="category-card" onclick="selectCategory('console')"><span class="rank">#9</span><span class="emoji">🎮</span><div class="name">เกม Console</div></div>
-    <div class="category-card" onclick="selectCategory('bag')"><span class="rank">#10</span><span class="emoji">👜</span><div class="name">กระเป๋าแบรนด์</div></div>
+    <div class="category-card top" onclick="selectCategory('iphone')"><span class="emoji">📱</span><div class="name">iPhone</div></div>
+    <div class="category-card top" onclick="selectCategory('ipad')"><span class="emoji">📲</span><div class="name">iPad</div></div>
+    <div class="category-card top" onclick="selectCategory('android')"><span class="emoji">📱</span><div class="name">Android</div></div>
+    <div class="category-card" onclick="selectCategory('notebook')"><span class="emoji">💻</span><div class="name">Notebook</div></div>
+    <div class="category-card" onclick="selectCategory('macbook')"><span class="emoji">💻</span><div class="name">MacBook</div></div>
+    <div class="category-card" onclick="selectCategory('camera')"><span class="emoji">📷</span><div class="name">กล้อง</div></div>
+    <div class="category-card" onclick="selectCategory('watch')"><span class="emoji">⌚</span><div class="name">Apple Watch</div></div>
+    <div class="category-card" onclick="selectCategory('airpods')"><span class="emoji">🎧</span><div class="name">AirPods/หูฟัง</div></div>
+    <div class="category-card" onclick="selectCategory('console')"><span class="emoji">🎮</span><div class="name">เกม Console</div></div>
+    <div class="category-card" onclick="selectCategory('bag')"><span class="emoji">👜</span><div class="name">กระเป๋าแบรนด์</div></div>
+    <div class="category-card" onclick="selectCategory('car')"><span class="emoji">🚗</span><div class="name">รถยนต์</div></div>
+    <div class="category-card" onclick="selectCategory('motorbike')"><span class="emoji">🏍️</span><div class="name">มอไซด์</div></div>
+    <div class="category-card" onclick="selectCategory('tablet')"><span class="emoji">📲</span><div class="name">Tablet</div></div>
+    <div class="category-card" onclick="selectCategory('other')"><span class="emoji">📦</span><div class="name">อื่นๆ</div></div>
   </div>
 </div>
 
-<!-- ฟอร์ม iPhone -->
+<!-- ฟอร์ม iPhone (รับจำนำมือถือ - ล็อคตำหนิ + auto-grade) -->
 <div id="form-iphone" class="form-section">
   <button class="back-btn" onclick="goBack()">← เปลี่ยนประเภท</button>
-  <form onsubmit="generatePost(event, 'iphone')">
+  <form onsubmit="generatePost(event, 'iphone')" oninput="recalc(this)" onchange="recalc(this)">
     <div class="card">
-      <h2><span class="num">1</span> 📱 iPhone</h2>
+      <h2 style="justify-content:center;font-size:18px;border-bottom:none;">📱 รับจำนำมือถือ</h2>
+
+      <div class="section-h">[ ข้อมูลพื้นฐาน ]</div>
       <div class="field"><label>เลขที่สัญญา *</label><input type="text" name="contract" placeholder="HKG-2960" required></div>
-      <div class="field"><label>รุ่น *</label><input type="text" name="model" placeholder="iPhone 16 Pro Max" required></div>
+      <div class="field"><label>IMEI</label><input type="text" name="imei" placeholder="สแกนหรือกรอก IMEI"></div>
+      <div class="field"><label>รุ่น *</label><input type="text" name="model" placeholder="เช่น iPhone 15 Pro" required></div>
       <div class="row">
-        <div class="field"><label>ความจุ *</label>
-          <select name="storage" required><option value="">--</option><option>64GB</option><option>128GB</option><option>256GB</option><option>512GB</option><option>1TB</option></select>
-        </div>
-        <div class="field"><label>สี *</label><input type="text" name="color" placeholder="Natural Titanium" required></div>
+        <div class="field"><label>สี *</label><input type="text" name="color" placeholder="เช่น Titanium" required></div>
+        <div class="field"><label>ความจุ *</label><input type="text" name="storage" placeholder="เช่น 256GB" required></div>
       </div>
       <div class="field"><label>เครื่องศูนย์ *</label>
         <div class="radio-group">
@@ -246,45 +332,109 @@
           <label><input type="radio" name="origin" value="เครื่องนอก"><span>🌏 นอก</span></label>
         </div>
       </div>
-      <div class="row">
-        <div class="field"><label>🔋 แบต % *</label><input type="number" name="battery" min="0" max="100" placeholder="92" required></div>
-        <div class="field"><label>เกรดสภาพ *</label>
-          <div class="radio-group">
-            <label class="grade-A"><input type="radio" name="grade" value="A สวย" required><span>A</span></label>
-            <label class="grade-B"><input type="radio" name="grade" value="B มีรอย"><span>B</span></label>
-            <label class="grade-C"><input type="radio" name="grade" value="C มีตำหนิ"><span>C</span></label>
-          </div>
-        </div>
+
+      <div class="section-h">[ หน้าจอ ] <span class="hint">(ระบุจำนวนทุกข้อ)</span></div>
+      <div class="defect-row">
+        <label><input type="checkbox" name="d_screen_scratch" data-defect="screen"> หลุดรอย</label>
+        <input type="number" name="d_screen_scratch_n" placeholder="จำนวน" min="0">
       </div>
-      <div class="field"><label>ตำหนิ (ถ้ามี)</label><textarea name="defects" rows="2" placeholder="เช่น ขอบมีรอย"></textarea></div>
-      <div class="field"><label>อุปกรณ์ที่ได้</label>
-        <div class="checkbox-group">
-          <label><input type="checkbox" name="acc" value="กล่อง"><span>📦 กล่อง</span></label>
-          <label><input type="checkbox" name="acc" value="สายชาร์จ"><span>🔌 สายชาร์จ</span></label>
-          <label><input type="checkbox" name="acc" value="หัวชาร์จ"><span>⚡ หัวชาร์จ</span></label>
-        </div>
+      <div class="defect-row">
+        <label><input type="checkbox" name="d_screen_dead" data-defect="screen"> จุดดับ</label>
+        <input type="number" name="d_screen_dead_n" placeholder="จำนวน" min="0">
       </div>
-      <div class="field"><label>ประกัน</label><input type="text" name="warranty" placeholder="เหลือถึง 01/05/69 / AppleCare+ / หมดประกัน"></div>
+      <div class="defect-row">
+        <label><input type="checkbox" name="d_screen_hairline" data-defect="screen"> ขนแมว</label>
+        <input type="number" name="d_screen_hairline_n" placeholder="จำนวน" min="0">
+      </div>
+      <div class="defect-row">
+        <label><input type="checkbox" name="d_screen_replaced" data-defect="screen-major"> เปลี่ยนจอ</label>
+        <input type="number" name="d_screen_replaced_n" placeholder="ครั้ง" min="0">
+      </div>
+
+      <div class="section-h">[ ตัวเครื่อง ] <span class="hint">(ระบุจำนวนทุกข้อ)</span></div>
+      <div class="defect-row">
+        <label><input type="checkbox" name="d_body_scratch" data-defect="body"> รอยขูด</label>
+        <input type="number" name="d_body_scratch_n" placeholder="จำนวน" min="0">
+      </div>
+      <div class="defect-row">
+        <label><input type="checkbox" name="d_body_dent" data-defect="body"> รอยบุบ</label>
+        <input type="number" name="d_body_dent_n" placeholder="จำนวน" min="0">
+      </div>
+      <div class="defect-row">
+        <label><input type="checkbox" name="d_body_repaired" data-defect="body-major"> เคยซ่อม</label>
+        <input type="number" name="d_body_repaired_n" placeholder="ครั้ง" min="0">
+      </div>
+
+      <div class="section-h">[ การทำงาน ] <span class="hint">(ติ๊กถ้ามีปัญหา)</span></div>
+      <div class="defect-row">
+        <label><input type="checkbox" name="d_func_camera" data-defect="func"> กล้อง</label>
+        <input type="text" name="d_func_camera_t" placeholder="ปัญหา">
+      </div>
+      <div class="defect-row">
+        <label><input type="checkbox" name="d_func_speaker" data-defect="func"> ลำโพง</label>
+        <input type="text" name="d_func_speaker_t" placeholder="ปัญหา">
+      </div>
+      <div class="defect-row">
+        <label><input type="checkbox" name="d_func_faceid" data-defect="func"> สแกนหน้า</label>
+        <input type="text" name="d_func_faceid_t" placeholder="ปัญหา">
+      </div>
+      <div class="defect-row">
+        <label><input type="checkbox" name="d_func_other" data-defect="func"> อื่นๆ</label>
+        <input type="text" name="d_func_other_t" placeholder="ระบุปัญหา">
+      </div>
+
+      <div class="section-h">[ แบตเตอรี่ ]</div>
+      <div class="field"><input type="number" name="battery" placeholder="ใส่ % (เว้นว่างได้)" min="0" max="100"></div>
+
+      <div class="section-h">[ อุปกรณ์เสริม ]</div>
+      <div class="defect-row">
+        <label><input type="checkbox" name="acc_box"> กล่อง</label>
+      </div>
+      <div class="defect-row">
+        <label><input type="checkbox" name="acc_cable"> สายชาร์จ</label>
+      </div>
+      <div class="defect-row">
+        <label><input type="checkbox" name="acc_adapter"> Adapter</label>
+      </div>
+      <div class="defect-row">
+        <label><input type="checkbox" name="acc_other"> อื่นๆ</label>
+        <input type="text" name="acc_other_t" placeholder="ระบุ">
+      </div>
+
+      <div class="section-h">[ ประกัน ]</div>
+      <div class="defect-row">
+        <label><input type="radio" name="warranty_type" value="active"> ประกันศูนย์เหลือ</label>
+        <input type="number" name="warranty_left" placeholder="เดือน" min="0">
+        <span class="unit">เดือน</span>
+      </div>
+      <div class="defect-row">
+        <label><input type="radio" name="warranty_type" value="expired"> หมดประกันแล้ว</label>
+        <input type="text" name="warranty_expired" placeholder="นานเท่าไหร่">
+      </div>
     </div>
-    <div class="card"><h2><span class="num">2</span> 💰 ราคา</h2><div class="row">
-      <div class="field"><label>ยอดฝาก *</label><div class="price-input"><input type="number" name="pawn" required></div></div>
-      <div class="field"><label>ราคาขาย *</label><div class="price-input"><input type="number" name="sell" required></div></div>
-    </div></div>
-    <button type="submit" class="submit-btn">✅ บันทึก + สร้างโพสต์ FB</button>
+
+    <div class="result-box grade-A">
+      <div class="grade-text">เกรด <span>A</span></div>
+      <div class="price-text">💰 <input type="number" name="pawn" placeholder="ยอดฝาก" required> บาท</div>
+    </div>
+
+    <button type="submit" class="submit-btn">ยืนยันบันทึก</button>
   </form>
 </div>
 
 <!-- ฟอร์ม iPad -->
 <div id="form-ipad" class="form-section">
   <button class="back-btn" onclick="goBack()">← เปลี่ยนประเภท</button>
-  <form onsubmit="generatePost(event, 'ipad')">
+  <form onsubmit="generatePost(event, 'ipad')" oninput="recalc(this)" onchange="recalc(this)">
     <div class="card">
-      <h2><span class="num">1</span> 📲 iPad</h2>
+      <h2 style="justify-content:center;font-size:18px;border-bottom:none;">📲 รับจำนำ iPad</h2>
+
+      <div class="section-h">[ ข้อมูลพื้นฐาน ]</div>
       <div class="field"><label>เลขที่สัญญา *</label><input type="text" name="contract" required></div>
       <div class="field"><label>รุ่น *</label><input type="text" name="model" placeholder="iPad Air 5 / iPad Pro 12.9 M2" required></div>
       <div class="row">
-        <div class="field"><label>ความจุ *</label><select name="storage" required><option value="">--</option><option>64GB</option><option>128GB</option><option>256GB</option><option>512GB</option><option>1TB</option><option>2TB</option></select></div>
         <div class="field"><label>สี *</label><input type="text" name="color" required></div>
+        <div class="field"><label>ความจุ *</label><input type="text" name="storage" placeholder="256GB" required></div>
       </div>
       <div class="field"><label>การเชื่อมต่อ *</label>
         <div class="radio-group">
@@ -292,135 +442,122 @@
           <label><input type="radio" name="connect" value="Wi-Fi + Cellular"><span>📡 Wi-Fi + Cellular</span></label>
         </div>
       </div>
-      <div class="row">
-        <div class="field"><label>🔋 แบต % *</label><input type="number" name="battery" min="0" max="100" required></div>
-        <div class="field"><label>เกรดสภาพ *</label>
-          <div class="radio-group">
-            <label class="grade-A"><input type="radio" name="grade" value="A สวย" required><span>A</span></label>
-            <label class="grade-B"><input type="radio" name="grade" value="B มีรอย"><span>B</span></label>
-            <label class="grade-C"><input type="radio" name="grade" value="C มีตำหนิ"><span>C</span></label>
-          </div>
-        </div>
-      </div>
-      <div class="field"><label>ตำหนิ (ถ้ามี)</label><textarea name="defects" rows="2" placeholder="เช่น เครื่องงอ, มีรอยรอบเครื่อง"></textarea></div>
-      <div class="field"><label>อุปกรณ์ที่ได้</label>
-        <div class="checkbox-group">
-          <label><input type="checkbox" name="acc" value="กล่อง"><span>📦 กล่อง</span></label>
-          <label><input type="checkbox" name="acc" value="สายชาร์จ"><span>🔌 สายชาร์จ</span></label>
-          <label><input type="checkbox" name="acc" value="หัวชาร์จ"><span>⚡ หัวชาร์จ</span></label>
-          <label><input type="checkbox" name="acc" value="Pencil"><span>✏️ Pencil</span></label>
-          <label><input type="checkbox" name="acc" value="Keyboard"><span>⌨️ Keyboard</span></label>
-          <label><input type="checkbox" name="acc" value="เคส"><span>🛡️ เคส</span></label>
-        </div>
-      </div>
-      <div class="field"><label>ประกัน</label><input type="text" name="warranty" placeholder="เหลือถึง 01/05/69 / AppleCare+ / หมดประกัน"></div>
-    </div>
-    <div class="card"><h2><span class="num">2</span> 💰 ราคา</h2><div class="row">
-      <div class="field"><label>ยอดฝาก *</label><div class="price-input"><input type="number" name="pawn" required></div></div>
-      <div class="field"><label>ราคาขาย *</label><div class="price-input"><input type="number" name="sell" required></div></div>
-    </div></div>
-    <button type="submit" class="submit-btn">✅ บันทึก + สร้างโพสต์ FB</button>
-  </form>
-</div>
 
-<!-- ฟอร์ม Samsung -->
-<div id="form-samsung" class="form-section">
-  <button class="back-btn" onclick="goBack()">← เปลี่ยนประเภท</button>
-  <form onsubmit="generatePost(event, 'samsung')">
-    <div class="card">
-      <h2><span class="num">1</span> 📱 Samsung Galaxy</h2>
-      <div class="field"><label>เลขที่สัญญา *</label><input type="text" name="contract" required></div>
-      <div class="row">
-        <div class="field"><label>รุ่น *</label><input type="text" name="model" placeholder="S24 Ultra / Z Fold 6" required></div>
-        <div class="field"><label>ความจุ *</label><select name="storage" required><option value="">--</option><option>128GB</option><option>256GB</option><option>512GB</option><option>1TB</option></select></div>
-      </div>
-      <div class="row">
-        <div class="field"><label>สี *</label><input type="text" name="color" required></div>
-        <div class="field"><label>RAM</label><select name="ram"><option value="">--</option><option>8GB</option><option>12GB</option><option>16GB</option></select></div>
-      </div>
-      <div class="row">
-        <div class="field"><label>🔋 แบต % *</label><input type="number" name="battery" min="0" max="100" required></div>
-        <div class="field"><label>เกรดสภาพ *</label>
-          <div class="radio-group">
-            <label class="grade-A"><input type="radio" name="grade" value="A สวย" required><span>A</span></label>
-            <label class="grade-B"><input type="radio" name="grade" value="B มีรอย"><span>B</span></label>
-            <label class="grade-C"><input type="radio" name="grade" value="C มีตำหนิ"><span>C</span></label>
-          </div>
-        </div>
-      </div>
-      <div class="field"><label>ตำหนิ (ถ้ามี)</label><textarea name="defects" rows="2"></textarea></div>
-      <div class="field"><label>อุปกรณ์ที่ได้</label>
-        <div class="checkbox-group">
-          <label><input type="checkbox" name="acc" value="กล่อง"><span>📦 กล่อง</span></label>
-          <label><input type="checkbox" name="acc" value="สายชาร์จ"><span>🔌 สายชาร์จ</span></label>
-          <label><input type="checkbox" name="acc" value="หัวชาร์จ"><span>⚡ หัวชาร์จ</span></label>
-          <label><input type="checkbox" name="acc" value="S Pen"><span>✏️ S Pen</span></label>
-        </div>
-      </div>
-      <div class="field"><label>ประกัน</label><input type="text" name="warranty" placeholder="เหลือถึง 01/05/69 / Samsung Care+ / หมดประกัน"></div>
+      <div class="section-h">[ หน้าจอ ] <span class="hint">(ระบุจำนวนทุกข้อ)</span></div>
+      <div class="defect-row"><label><input type="checkbox" name="d_screen_scratch" data-defect="screen"> หลุดรอย</label><input type="number" name="d_screen_scratch_n" placeholder="จำนวน" min="0"></div>
+      <div class="defect-row"><label><input type="checkbox" name="d_screen_dead" data-defect="screen"> จุดดับ</label><input type="number" name="d_screen_dead_n" placeholder="จำนวน" min="0"></div>
+      <div class="defect-row"><label><input type="checkbox" name="d_screen_hairline" data-defect="screen"> ขนแมว</label><input type="number" name="d_screen_hairline_n" placeholder="จำนวน" min="0"></div>
+      <div class="defect-row"><label><input type="checkbox" name="d_screen_replaced" data-defect="screen-major"> เปลี่ยนจอ</label><input type="number" name="d_screen_replaced_n" placeholder="ครั้ง" min="0"></div>
+
+      <div class="section-h">[ ตัวเครื่อง ] <span class="hint">(ระบุจำนวนทุกข้อ)</span></div>
+      <div class="defect-row"><label><input type="checkbox" name="d_body_scratch" data-defect="body"> รอยขูด</label><input type="number" name="d_body_scratch_n" placeholder="จำนวน" min="0"></div>
+      <div class="defect-row"><label><input type="checkbox" name="d_body_dent" data-defect="body"> รอยบุบ</label><input type="number" name="d_body_dent_n" placeholder="จำนวน" min="0"></div>
+      <div class="defect-row"><label><input type="checkbox" name="d_body_bend" data-defect="body-major"> เครื่องงอ</label><input type="number" name="d_body_bend_n" placeholder="จุด" min="0"></div>
+      <div class="defect-row"><label><input type="checkbox" name="d_body_repaired" data-defect="body-major"> เคยซ่อม</label><input type="number" name="d_body_repaired_n" placeholder="ครั้ง" min="0"></div>
+
+      <div class="section-h">[ การทำงาน ] <span class="hint">(ติ๊กถ้ามีปัญหา)</span></div>
+      <div class="defect-row"><label><input type="checkbox" name="d_func_camera" data-defect="func"> กล้อง</label><input type="text" name="d_func_camera_t" placeholder="ปัญหา"></div>
+      <div class="defect-row"><label><input type="checkbox" name="d_func_speaker" data-defect="func"> ลำโพง</label><input type="text" name="d_func_speaker_t" placeholder="ปัญหา"></div>
+      <div class="defect-row"><label><input type="checkbox" name="d_func_touch" data-defect="func"> ทัชสกรีน</label><input type="text" name="d_func_touch_t" placeholder="ปัญหา"></div>
+      <div class="defect-row"><label><input type="checkbox" name="d_func_other" data-defect="func"> อื่นๆ</label><input type="text" name="d_func_other_t" placeholder="ระบุปัญหา"></div>
+
+      <div class="section-h">[ แบตเตอรี่ ]</div>
+      <div class="field"><input type="number" name="battery" placeholder="ใส่ % (เว้นว่างได้)" min="0" max="100"></div>
+
+      <div class="section-h">[ อุปกรณ์เสริม ]</div>
+      <div class="defect-row"><label><input type="checkbox" name="acc_box"> กล่อง</label></div>
+      <div class="defect-row"><label><input type="checkbox" name="acc_cable"> สายชาร์จ</label></div>
+      <div class="defect-row"><label><input type="checkbox" name="acc_adapter"> Adapter</label></div>
+      <div class="defect-row"><label><input type="checkbox" name="acc_pencil"> Pencil</label></div>
+      <div class="defect-row"><label><input type="checkbox" name="acc_keyboard"> Keyboard</label></div>
+      <div class="defect-row"><label><input type="checkbox" name="acc_case"> เคส</label></div>
+      <div class="defect-row"><label><input type="checkbox" name="acc_other"> อื่นๆ</label><input type="text" name="acc_other_t" placeholder="ระบุ"></div>
+
+      <div class="section-h">[ ประกัน ]</div>
+      <div class="defect-row"><label><input type="radio" name="warranty_type" value="active"> ประกันศูนย์เหลือ</label><input type="number" name="warranty_left" placeholder="เดือน" min="0"><span class="unit">เดือน</span></div>
+      <div class="defect-row"><label><input type="radio" name="warranty_type" value="expired"> หมดประกันแล้ว</label><input type="text" name="warranty_expired" placeholder="นานเท่าไหร่"></div>
     </div>
-    <div class="card"><h2><span class="num">2</span> 💰 ราคา</h2><div class="row">
-      <div class="field"><label>ยอดฝาก *</label><div class="price-input"><input type="number" name="pawn" required></div></div>
-      <div class="field"><label>ราคาขาย *</label><div class="price-input"><input type="number" name="sell" required></div></div>
-    </div></div>
-    <button type="submit" class="submit-btn">✅ บันทึก + สร้างโพสต์ FB</button>
+
+    <div class="result-box grade-A">
+      <div class="grade-text">เกรด <span>A</span></div>
+      <div class="price-text">💰 <input type="number" name="pawn" placeholder="ยอดฝาก" required> บาท</div>
+    </div>
+
+    <button type="submit" class="submit-btn">ยืนยันบันทึก</button>
   </form>
 </div>
 
 <!-- ฟอร์ม MacBook -->
 <div id="form-macbook" class="form-section">
   <button class="back-btn" onclick="goBack()">← เปลี่ยนประเภท</button>
-  <form onsubmit="generatePost(event, 'macbook')">
+  <form onsubmit="generatePost(event, 'macbook')" oninput="recalc(this)" onchange="recalc(this)">
     <div class="card">
-      <h2><span class="num">1</span> 💻 MacBook</h2>
+      <h2 style="justify-content:center;font-size:18px;border-bottom:none;">💻 รับจำนำ MacBook</h2>
+
+      <div class="section-h">[ ข้อมูลพื้นฐาน ]</div>
       <div class="field"><label>เลขที่สัญญา *</label><input type="text" name="contract" required></div>
       <div class="row">
         <div class="field"><label>รุ่น *</label><input type="text" name="model" placeholder="MacBook Air M3 13" required></div>
         <div class="field"><label>ปี *</label><input type="text" name="year" placeholder="2024" required></div>
       </div>
       <div class="row">
-        <div class="field"><label>RAM *</label><select name="ram" required><option value="">--</option><option>8GB</option><option>16GB</option><option>24GB</option><option>32GB</option><option>48GB</option><option>64GB</option><option>96GB</option><option>128GB</option></select></div>
-        <div class="field"><label>SSD *</label><select name="ssd" required><option value="">--</option><option>256GB</option><option>512GB</option><option>1TB</option><option>2TB</option><option>4TB</option><option>8TB</option></select></div>
+        <div class="field"><label>RAM *</label><input type="text" name="ram" placeholder="16GB" required></div>
+        <div class="field"><label>SSD *</label><input type="text" name="ssd" placeholder="512GB" required></div>
       </div>
+      <div class="field"><label>สี *</label><input type="text" name="color" placeholder="Space Gray" required></div>
+
+      <div class="section-h">[ หน้าจอ ] <span class="hint">(ระบุจำนวนทุกข้อ)</span></div>
+      <div class="defect-row"><label><input type="checkbox" name="d_screen_scratch" data-defect="screen"> หลุดรอย</label><input type="number" name="d_screen_scratch_n" placeholder="จำนวน" min="0"></div>
+      <div class="defect-row"><label><input type="checkbox" name="d_screen_dead" data-defect="screen"> จุดดับ/Pixel เสีย</label><input type="number" name="d_screen_dead_n" placeholder="จำนวน" min="0"></div>
+      <div class="defect-row"><label><input type="checkbox" name="d_screen_replaced" data-defect="screen-major"> เปลี่ยนจอ</label><input type="number" name="d_screen_replaced_n" placeholder="ครั้ง" min="0"></div>
+
+      <div class="section-h">[ ตัวเครื่อง ] <span class="hint">(ระบุจำนวนทุกข้อ)</span></div>
+      <div class="defect-row"><label><input type="checkbox" name="d_body_scratch" data-defect="body"> รอยขูด</label><input type="number" name="d_body_scratch_n" placeholder="จำนวน" min="0"></div>
+      <div class="defect-row"><label><input type="checkbox" name="d_body_dent" data-defect="body"> รอยบุบ/Dent</label><input type="number" name="d_body_dent_n" placeholder="จำนวน" min="0"></div>
+      <div class="defect-row"><label><input type="checkbox" name="d_body_repaired" data-defect="body-major"> เคยซ่อม</label><input type="number" name="d_body_repaired_n" placeholder="ครั้ง" min="0"></div>
+
+      <div class="section-h">[ การทำงาน ] <span class="hint">(ติ๊กถ้ามีปัญหา)</span></div>
+      <div class="defect-row"><label><input type="checkbox" name="d_func_keyboard" data-defect="func"> คีย์บอร์ด</label><input type="text" name="d_func_keyboard_t" placeholder="ปัญหา"></div>
+      <div class="defect-row"><label><input type="checkbox" name="d_func_trackpad" data-defect="func"> แทร็คแพด</label><input type="text" name="d_func_trackpad_t" placeholder="ปัญหา"></div>
+      <div class="defect-row"><label><input type="checkbox" name="d_func_port" data-defect="func"> พอร์ต/USB-C</label><input type="text" name="d_func_port_t" placeholder="ปัญหา"></div>
+      <div class="defect-row"><label><input type="checkbox" name="d_func_fan" data-defect="func"> พัดลม/ความร้อน</label><input type="text" name="d_func_fan_t" placeholder="ปัญหา"></div>
+      <div class="defect-row"><label><input type="checkbox" name="d_func_other" data-defect="func"> อื่นๆ</label><input type="text" name="d_func_other_t" placeholder="ระบุปัญหา"></div>
+
+      <div class="section-h">[ แบตเตอรี่ ]</div>
       <div class="row">
-        <div class="field"><label>สี *</label><input type="text" name="color" placeholder="Space Gray" required></div>
-        <div class="field"><label>🔋 Cycle Count</label><input type="number" name="cycle" placeholder="150"></div>
+        <div class="field"><label>แบต %</label><input type="number" name="battery" min="0" max="100" placeholder="92"></div>
+        <div class="field"><label>Cycle Count</label><input type="number" name="cycle" placeholder="150"></div>
       </div>
-      <div class="row">
-        <div class="field"><label>🔋 แบต %</label><input type="number" name="battery" min="0" max="100"></div>
-        <div class="field"><label>เกรดสภาพ *</label>
-          <div class="radio-group">
-            <label class="grade-A"><input type="radio" name="grade" value="A สวย" required><span>A</span></label>
-            <label class="grade-B"><input type="radio" name="grade" value="B มีรอย"><span>B</span></label>
-            <label class="grade-C"><input type="radio" name="grade" value="C มีตำหนิ"><span>C</span></label>
-          </div>
-        </div>
-      </div>
-      <div class="field"><label>ตำหนิ (ถ้ามี)</label><textarea name="defects" rows="2" placeholder="เช่น Dent ที่ขอบ, Pixel เสีย"></textarea></div>
-      <div class="field"><label>อุปกรณ์ที่ได้</label>
-        <div class="checkbox-group">
-          <label><input type="checkbox" name="acc" value="กล่อง"><span>📦 กล่อง</span></label>
-          <label><input type="checkbox" name="acc" value="สายชาร์จ"><span>🔌 สายชาร์จ</span></label>
-          <label><input type="checkbox" name="acc" value="Adapter"><span>🔋 Adapter</span></label>
-          <label><input type="checkbox" name="acc" value="กระเป๋า"><span>💼 กระเป๋า</span></label>
-        </div>
-      </div>
-      <div class="field"><label>ประกัน</label><input type="text" name="warranty" placeholder="เหลือถึง 01/05/69 หรือ หมดประกัน"></div>
+
+      <div class="section-h">[ อุปกรณ์เสริม ]</div>
+      <div class="defect-row"><label><input type="checkbox" name="acc_box"> กล่อง</label></div>
+      <div class="defect-row"><label><input type="checkbox" name="acc_cable"> สายชาร์จ</label></div>
+      <div class="defect-row"><label><input type="checkbox" name="acc_adapter"> Adapter</label></div>
+      <div class="defect-row"><label><input type="checkbox" name="acc_bag"> กระเป๋า</label></div>
+      <div class="defect-row"><label><input type="checkbox" name="acc_other"> อื่นๆ</label><input type="text" name="acc_other_t" placeholder="ระบุ"></div>
+
+      <div class="section-h">[ ประกัน ]</div>
+      <div class="defect-row"><label><input type="radio" name="warranty_type" value="active"> ประกันเหลือ</label><input type="number" name="warranty_left" placeholder="เดือน" min="0"><span class="unit">เดือน</span></div>
+      <div class="defect-row"><label><input type="radio" name="warranty_type" value="expired"> หมดประกันแล้ว</label><input type="text" name="warranty_expired" placeholder="นานเท่าไหร่"></div>
     </div>
-    <div class="card"><h2><span class="num">2</span> 💰 ราคา</h2><div class="row">
-      <div class="field"><label>ยอดฝาก *</label><div class="price-input"><input type="number" name="pawn" required></div></div>
-      <div class="field"><label>ราคาขาย *</label><div class="price-input"><input type="number" name="sell" required></div></div>
-    </div></div>
-    <button type="submit" class="submit-btn">✅ บันทึก + สร้างโพสต์ FB</button>
+
+    <div class="result-box grade-A">
+      <div class="grade-text">เกรด <span>A</span></div>
+      <div class="price-text">💰 <input type="number" name="pawn" placeholder="ยอดฝาก" required> บาท</div>
+    </div>
+
+    <button type="submit" class="submit-btn">ยืนยันบันทึก</button>
   </form>
 </div>
 
 <!-- ฟอร์ม Camera -->
 <div id="form-camera" class="form-section">
   <button class="back-btn" onclick="goBack()">← เปลี่ยนประเภท</button>
-  <form onsubmit="generatePost(event, 'camera')">
+  <form onsubmit="generatePost(event, 'camera')" oninput="recalc(this)" onchange="recalc(this)">
     <div class="card">
-      <h2><span class="num">1</span> 📷 กล้อง</h2>
+      <h2 style="justify-content:center;font-size:18px;border-bottom:none;">📷 รับจำนำกล้อง</h2>
+
+      <div class="section-h">[ ข้อมูลพื้นฐาน ]</div>
       <div class="field"><label>เลขที่สัญญา *</label><input type="text" name="contract" required></div>
       <div class="row">
         <div class="field"><label>ยี่ห้อ *</label><input type="text" name="brand" placeholder="Canon / Sony / Fuji" required></div>
@@ -436,52 +573,67 @@
         <div class="field"><label>Shutter Count</label><input type="number" name="shutter" placeholder="5000"></div>
       </div>
       <div class="field"><label>Lens (ถ้ามี)</label><input type="text" name="lens" placeholder="RF 24-105mm f/4L"></div>
-      <div class="row">
-        <div class="field"><label>เกรดสภาพ *</label>
-          <div class="radio-group">
-            <label class="grade-A"><input type="radio" name="grade" value="A สวย" required><span>A</span></label>
-            <label class="grade-B"><input type="radio" name="grade" value="B มีรอย"><span>B</span></label>
-            <label class="grade-C"><input type="radio" name="grade" value="C มีตำหนิ"><span>C</span></label>
-          </div>
-        </div>
-        <div class="field"><label>เครื่องศูนย์</label>
-          <div class="radio-group">
-            <label><input type="radio" name="origin" value="ศูนย์ไทย"><span>🇹🇭 ไทย</span></label>
-            <label><input type="radio" name="origin" value="นอก"><span>🌏 นอก</span></label>
-          </div>
+      <div class="field"><label>เครื่องศูนย์</label>
+        <div class="radio-group">
+          <label><input type="radio" name="origin" value="ศูนย์ไทย"><span>🇹🇭 ไทย</span></label>
+          <label><input type="radio" name="origin" value="นอก"><span>🌏 นอก</span></label>
         </div>
       </div>
-      <div class="field"><label>ตำหนิ (ถ้ามี)</label><textarea name="defects" rows="2" placeholder="เช่น ราเลนส์, เซ็นเซอร์มีฝุ่น"></textarea></div>
-      <div class="field"><label>อุปกรณ์ที่ได้</label>
-        <div class="checkbox-group">
-          <label><input type="checkbox" name="acc" value="กล่อง"><span>📦 กล่อง</span></label>
-          <label><input type="checkbox" name="acc" value="แบต"><span>🔋 แบต</span></label>
-          <label><input type="checkbox" name="acc" value="ที่ชาร์จ"><span>⚡ ที่ชาร์จ</span></label>
-          <label><input type="checkbox" name="acc" value="สายคล้อง"><span>🪢 สายคล้อง</span></label>
-          <label><input type="checkbox" name="acc" value="Memory Card"><span>💾 SD Card</span></label>
-          <label><input type="checkbox" name="acc" value="กระเป๋า"><span>💼 กระเป๋า</span></label>
-        </div>
-      </div>
-      <div class="field"><label>ประกัน</label><input type="text" name="warranty" placeholder="เหลือถึง 01/05/69 / หมดประกัน"></div>
+
+      <div class="section-h">[ ตัวเครื่อง ] <span class="hint">(ระบุจำนวนทุกข้อ)</span></div>
+      <div class="defect-row"><label><input type="checkbox" name="d_body_scratch" data-defect="body"> รอยขูด</label><input type="number" name="d_body_scratch_n" placeholder="จำนวน" min="0"></div>
+      <div class="defect-row"><label><input type="checkbox" name="d_body_dent" data-defect="body"> รอยบุบ</label><input type="number" name="d_body_dent_n" placeholder="จำนวน" min="0"></div>
+      <div class="defect-row"><label><input type="checkbox" name="d_body_repaired" data-defect="body-major"> เคยซ่อม</label><input type="number" name="d_body_repaired_n" placeholder="ครั้ง" min="0"></div>
+
+      <div class="section-h">[ เลนส์ ] <span class="hint">(ระบุจำนวนทุกข้อ)</span></div>
+      <div class="defect-row"><label><input type="checkbox" name="d_lens_scratch" data-defect="lens"> รอย</label><input type="number" name="d_lens_scratch_n" placeholder="จำนวน" min="0"></div>
+      <div class="defect-row"><label><input type="checkbox" name="d_lens_mold" data-defect="lens"> รา</label><input type="number" name="d_lens_mold_n" placeholder="จุด" min="0"></div>
+      <div class="defect-row"><label><input type="checkbox" name="d_lens_dust" data-defect="lens"> ฝุ่น</label><input type="number" name="d_lens_dust_n" placeholder="จุด" min="0"></div>
+      <div class="defect-row"><label><input type="checkbox" name="d_lens_other" data-defect="lens"> อื่นๆ</label><input type="text" name="d_lens_other_t" placeholder="ระบุ"></div>
+
+      <div class="section-h">[ การทำงาน ] <span class="hint">(ติ๊กถ้ามีปัญหา)</span></div>
+      <div class="defect-row"><label><input type="checkbox" name="d_func_shutter" data-defect="func"> ชัตเตอร์</label><input type="text" name="d_func_shutter_t" placeholder="ปัญหา"></div>
+      <div class="defect-row"><label><input type="checkbox" name="d_func_af" data-defect="func"> AF</label><input type="text" name="d_func_af_t" placeholder="ปัญหา"></div>
+      <div class="defect-row"><label><input type="checkbox" name="d_func_screen" data-defect="func"> จอ</label><input type="text" name="d_func_screen_t" placeholder="ปัญหา"></div>
+      <div class="defect-row"><label><input type="checkbox" name="d_func_sensor" data-defect="func"> Sensor</label><input type="text" name="d_func_sensor_t" placeholder="ปัญหา"></div>
+      <div class="defect-row"><label><input type="checkbox" name="d_func_flash" data-defect="func"> แฟลช</label><input type="text" name="d_func_flash_t" placeholder="ปัญหา"></div>
+      <div class="defect-row"><label><input type="checkbox" name="d_func_other" data-defect="func"> อื่นๆ</label><input type="text" name="d_func_other_t" placeholder="ระบุปัญหา"></div>
+
+      <div class="section-h">[ อุปกรณ์เสริม ]</div>
+      <div class="defect-row"><label><input type="checkbox" name="acc_box"> กล่อง</label></div>
+      <div class="defect-row"><label><input type="checkbox" name="acc_battery"> แบต</label></div>
+      <div class="defect-row"><label><input type="checkbox" name="acc_charger"> ที่ชาร์จ</label></div>
+      <div class="defect-row"><label><input type="checkbox" name="acc_strap"> สายคล้อง</label></div>
+      <div class="defect-row"><label><input type="checkbox" name="acc_sd"> Memory Card</label></div>
+      <div class="defect-row"><label><input type="checkbox" name="acc_bag"> กระเป๋า</label></div>
+      <div class="defect-row"><label><input type="checkbox" name="acc_other"> อื่นๆ</label><input type="text" name="acc_other_t" placeholder="ระบุ"></div>
+
+      <div class="section-h">[ ประกัน ]</div>
+      <div class="defect-row"><label><input type="radio" name="warranty_type" value="active"> ประกันเหลือ</label><input type="number" name="warranty_left" placeholder="เดือน" min="0"><span class="unit">เดือน</span></div>
+      <div class="defect-row"><label><input type="radio" name="warranty_type" value="expired"> หมดประกันแล้ว</label><input type="text" name="warranty_expired" placeholder="นานเท่าไหร่"></div>
     </div>
-    <div class="card"><h2><span class="num">2</span> 💰 ราคา</h2><div class="row">
-      <div class="field"><label>ยอดฝาก *</label><div class="price-input"><input type="number" name="pawn" required></div></div>
-      <div class="field"><label>ราคาขาย *</label><div class="price-input"><input type="number" name="sell" required></div></div>
-    </div></div>
-    <button type="submit" class="submit-btn">✅ บันทึก + สร้างโพสต์ FB</button>
+
+    <div class="result-box grade-A">
+      <div class="grade-text">เกรด <span>A</span></div>
+      <div class="price-text">💰 <input type="number" name="pawn" placeholder="ยอดฝาก" required> บาท</div>
+    </div>
+
+    <button type="submit" class="submit-btn">ยืนยันบันทึก</button>
   </form>
 </div>
 
 <!-- ฟอร์ม Apple Watch -->
 <div id="form-watch" class="form-section">
   <button class="back-btn" onclick="goBack()">← เปลี่ยนประเภท</button>
-  <form onsubmit="generatePost(event, 'watch')">
+  <form onsubmit="generatePost(event, 'watch')" oninput="recalc(this)" onchange="recalc(this)">
     <div class="card">
-      <h2><span class="num">1</span> ⌚ Apple Watch</h2>
+      <h2 style="justify-content:center;font-size:18px;border-bottom:none;">⌚ รับจำนำ Apple Watch</h2>
+
+      <div class="section-h">[ ข้อมูลพื้นฐาน ]</div>
       <div class="field"><label>เลขที่สัญญา *</label><input type="text" name="contract" required></div>
       <div class="row">
-        <div class="field"><label>รุ่น *</label><input type="text" name="model" placeholder="Series 9 / Ultra 2 / SE 2" required></div>
-        <div class="field"><label>ขนาด *</label><select name="size" required><option value="">--</option><option>40mm</option><option>41mm</option><option>42mm</option><option>44mm</option><option>45mm</option><option>46mm</option><option>49mm</option></select></div>
+        <div class="field"><label>รุ่น *</label><input type="text" name="model" placeholder="Series 9 / Ultra 2" required></div>
+        <div class="field"><label>ขนาด *</label><input type="text" name="size" placeholder="45mm" required></div>
       </div>
       <div class="row">
         <div class="field"><label>สี *</label><input type="text" name="color" placeholder="Midnight" required></div>
@@ -492,128 +644,159 @@
           </div>
         </div>
       </div>
-      <div class="row">
-        <div class="field"><label>🔋 แบต % *</label><input type="number" name="battery" min="0" max="100" required></div>
-        <div class="field"><label>เกรดสภาพ *</label>
-          <div class="radio-group">
-            <label class="grade-A"><input type="radio" name="grade" value="A สวย" required><span>A</span></label>
-            <label class="grade-B"><input type="radio" name="grade" value="B มีรอย"><span>B</span></label>
-            <label class="grade-C"><input type="radio" name="grade" value="C มีตำหนิ"><span>C</span></label>
-          </div>
-        </div>
-      </div>
-      <div class="field"><label>ตำหนิ (ถ้ามี)</label><textarea name="defects" rows="2"></textarea></div>
-      <div class="field"><label>อุปกรณ์ที่ได้</label>
-        <div class="checkbox-group">
-          <label><input type="checkbox" name="acc" value="กล่อง"><span>📦 กล่อง</span></label>
-          <label><input type="checkbox" name="acc" value="สาย"><span>⌚ สาย</span></label>
-          <label><input type="checkbox" name="acc" value="ที่ชาร์จ"><span>⚡ ที่ชาร์จ</span></label>
-        </div>
-      </div>
-      <div class="field"><label>ประกัน</label><input type="text" name="warranty" placeholder="เหลือถึง 01/05/69 / AppleCare+ / หมดประกัน"></div>
+
+      <div class="section-h">[ หน้าจอ ] <span class="hint">(ระบุจำนวนทุกข้อ)</span></div>
+      <div class="defect-row"><label><input type="checkbox" name="d_screen_scratch" data-defect="screen"> หลุดรอย</label><input type="number" name="d_screen_scratch_n" placeholder="จำนวน" min="0"></div>
+      <div class="defect-row"><label><input type="checkbox" name="d_screen_dead" data-defect="screen"> จุดดับ</label><input type="number" name="d_screen_dead_n" placeholder="จำนวน" min="0"></div>
+      <div class="defect-row"><label><input type="checkbox" name="d_screen_replaced" data-defect="screen-major"> เปลี่ยนจอ</label><input type="number" name="d_screen_replaced_n" placeholder="ครั้ง" min="0"></div>
+
+      <div class="section-h">[ ตัวเครื่อง ] <span class="hint">(ระบุจำนวนทุกข้อ)</span></div>
+      <div class="defect-row"><label><input type="checkbox" name="d_body_scratch" data-defect="body"> รอยขูด</label><input type="number" name="d_body_scratch_n" placeholder="จำนวน" min="0"></div>
+      <div class="defect-row"><label><input type="checkbox" name="d_body_dent" data-defect="body"> รอยบุบ</label><input type="number" name="d_body_dent_n" placeholder="จำนวน" min="0"></div>
+      <div class="defect-row"><label><input type="checkbox" name="d_body_repaired" data-defect="body-major"> เคยซ่อม</label><input type="number" name="d_body_repaired_n" placeholder="ครั้ง" min="0"></div>
+
+      <div class="section-h">[ การทำงาน ] <span class="hint">(ติ๊กถ้ามีปัญหา)</span></div>
+      <div class="defect-row"><label><input type="checkbox" name="d_func_button" data-defect="func"> ปุ่ม/Crown</label><input type="text" name="d_func_button_t" placeholder="ปัญหา"></div>
+      <div class="defect-row"><label><input type="checkbox" name="d_func_sensor" data-defect="func"> sensor วัดชีพจร</label><input type="text" name="d_func_sensor_t" placeholder="ปัญหา"></div>
+      <div class="defect-row"><label><input type="checkbox" name="d_func_other" data-defect="func"> อื่นๆ</label><input type="text" name="d_func_other_t" placeholder="ระบุปัญหา"></div>
+
+      <div class="section-h">[ แบตเตอรี่ ]</div>
+      <div class="field"><input type="number" name="battery" min="0" max="100" placeholder="ใส่ % (เว้นว่างได้)"></div>
+
+      <div class="section-h">[ อุปกรณ์เสริม ]</div>
+      <div class="defect-row"><label><input type="checkbox" name="acc_box"> กล่อง</label></div>
+      <div class="defect-row"><label><input type="checkbox" name="acc_band"> สาย</label></div>
+      <div class="defect-row"><label><input type="checkbox" name="acc_charger"> ที่ชาร์จ</label></div>
+      <div class="defect-row"><label><input type="checkbox" name="acc_other"> อื่นๆ</label><input type="text" name="acc_other_t" placeholder="ระบุ"></div>
+
+      <div class="section-h">[ ประกัน ]</div>
+      <div class="defect-row"><label><input type="radio" name="warranty_type" value="active"> ประกันศูนย์เหลือ</label><input type="number" name="warranty_left" placeholder="เดือน" min="0"><span class="unit">เดือน</span></div>
+      <div class="defect-row"><label><input type="radio" name="warranty_type" value="expired"> หมดประกันแล้ว</label><input type="text" name="warranty_expired" placeholder="นานเท่าไหร่"></div>
     </div>
-    <div class="card"><h2><span class="num">2</span> 💰 ราคา</h2><div class="row">
-      <div class="field"><label>ยอดฝาก *</label><div class="price-input"><input type="number" name="pawn" required></div></div>
-      <div class="field"><label>ราคาขาย *</label><div class="price-input"><input type="number" name="sell" required></div></div>
-    </div></div>
-    <button type="submit" class="submit-btn">✅ บันทึก + สร้างโพสต์ FB</button>
+
+    <div class="result-box grade-A">
+      <div class="grade-text">เกรด <span>A</span></div>
+      <div class="price-text">💰 <input type="number" name="pawn" placeholder="ยอดฝาก" required> บาท</div>
+    </div>
+
+    <button type="submit" class="submit-btn">ยืนยันบันทึก</button>
   </form>
 </div>
 
 <!-- ฟอร์ม AirPods/หูฟัง -->
 <div id="form-airpods" class="form-section">
   <button class="back-btn" onclick="goBack()">← เปลี่ยนประเภท</button>
-  <form onsubmit="generatePost(event, 'airpods')">
+  <form onsubmit="generatePost(event, 'airpods')" oninput="recalc(this)" onchange="recalc(this)">
     <div class="card">
-      <h2><span class="num">1</span> 🎧 AirPods / หูฟัง</h2>
+      <h2 style="justify-content:center;font-size:18px;border-bottom:none;">🎧 รับจำนำ AirPods/หูฟัง</h2>
+
+      <div class="section-h">[ ข้อมูลพื้นฐาน ]</div>
       <div class="field"><label>เลขที่สัญญา *</label><input type="text" name="contract" required></div>
       <div class="row">
         <div class="field"><label>ยี่ห้อ *</label><input type="text" name="brand" placeholder="Apple / Sony / Bose" required></div>
-        <div class="field"><label>รุ่น *</label><input type="text" name="model" placeholder="AirPods Pro 2 / WH-1000XM5" required></div>
+        <div class="field"><label>รุ่น *</label><input type="text" name="model" placeholder="AirPods Pro 2" required></div>
       </div>
-      <div class="row">
-        <div class="field"><label>สี</label><input type="text" name="color"></div>
-        <div class="field"><label>เกรดสภาพ *</label>
-          <div class="radio-group">
-            <label class="grade-A"><input type="radio" name="grade" value="A สวย" required><span>A</span></label>
-            <label class="grade-B"><input type="radio" name="grade" value="B มีรอย"><span>B</span></label>
-            <label class="grade-C"><input type="radio" name="grade" value="C มีตำหนิ"><span>C</span></label>
-          </div>
-        </div>
-      </div>
-      <div class="field"><label>ตำหนิ / สภาพแบต</label><textarea name="defects" rows="2" placeholder="เช่น แบต L ใช้ได้สั้น, จุก S หาย"></textarea></div>
-      <div class="field"><label>อุปกรณ์ที่ได้</label>
-        <div class="checkbox-group">
-          <label><input type="checkbox" name="acc" value="กล่อง"><span>📦 กล่อง</span></label>
-          <label><input type="checkbox" name="acc" value="เคสชาร์จ"><span>🔋 เคสชาร์จ</span></label>
-          <label><input type="checkbox" name="acc" value="สายชาร์จ"><span>🔌 สายชาร์จ</span></label>
-          <label><input type="checkbox" name="acc" value="จุกหู"><span>👂 จุกหู</span></label>
-          <label><input type="checkbox" name="acc" value="กระเป๋า"><span>💼 กระเป๋า</span></label>
-        </div>
-      </div>
-      <div class="field"><label>ประกัน</label><input type="text" name="warranty" placeholder="เหลือถึง 01/05/69 / AppleCare+ / หมดประกัน"></div>
+      <div class="field"><label>สี</label><input type="text" name="color"></div>
+
+      <div class="section-h">[ ตัวเครื่อง ] <span class="hint">(ระบุจำนวนทุกข้อ)</span></div>
+      <div class="defect-row"><label><input type="checkbox" name="d_body_scratch" data-defect="body"> รอยขูด</label><input type="number" name="d_body_scratch_n" placeholder="จำนวน" min="0"></div>
+      <div class="defect-row"><label><input type="checkbox" name="d_body_dent" data-defect="body"> รอยบุบ</label><input type="number" name="d_body_dent_n" placeholder="จำนวน" min="0"></div>
+      <div class="defect-row"><label><input type="checkbox" name="d_body_repaired" data-defect="body-major"> เคยซ่อม</label><input type="number" name="d_body_repaired_n" placeholder="ครั้ง" min="0"></div>
+
+      <div class="section-h">[ การทำงาน ] <span class="hint">(ติ๊กถ้ามีปัญหา)</span></div>
+      <div class="defect-row"><label><input type="checkbox" name="d_func_left" data-defect="func"> เสียงข้าง L</label><input type="text" name="d_func_left_t" placeholder="ปัญหา"></div>
+      <div class="defect-row"><label><input type="checkbox" name="d_func_right" data-defect="func"> เสียงข้าง R</label><input type="text" name="d_func_right_t" placeholder="ปัญหา"></div>
+      <div class="defect-row"><label><input type="checkbox" name="d_func_mic" data-defect="func"> ไมค์</label><input type="text" name="d_func_mic_t" placeholder="ปัญหา"></div>
+      <div class="defect-row"><label><input type="checkbox" name="d_func_battery" data-defect="func"> แบต</label><input type="text" name="d_func_battery_t" placeholder="ปัญหา"></div>
+      <div class="defect-row"><label><input type="checkbox" name="d_func_other" data-defect="func"> อื่นๆ</label><input type="text" name="d_func_other_t" placeholder="ระบุปัญหา"></div>
+
+      <div class="section-h">[ อุปกรณ์เสริม ]</div>
+      <div class="defect-row"><label><input type="checkbox" name="acc_box"> กล่อง</label></div>
+      <div class="defect-row"><label><input type="checkbox" name="acc_charge_case"> เคสชาร์จ</label></div>
+      <div class="defect-row"><label><input type="checkbox" name="acc_cable"> สายชาร์จ</label></div>
+      <div class="defect-row"><label><input type="checkbox" name="acc_tips"> จุกหู</label></div>
+      <div class="defect-row"><label><input type="checkbox" name="acc_bag"> กระเป๋า</label></div>
+      <div class="defect-row"><label><input type="checkbox" name="acc_other"> อื่นๆ</label><input type="text" name="acc_other_t" placeholder="ระบุ"></div>
+
+      <div class="section-h">[ ประกัน ]</div>
+      <div class="defect-row"><label><input type="radio" name="warranty_type" value="active"> ประกันศูนย์เหลือ</label><input type="number" name="warranty_left" placeholder="เดือน" min="0"><span class="unit">เดือน</span></div>
+      <div class="defect-row"><label><input type="radio" name="warranty_type" value="expired"> หมดประกันแล้ว</label><input type="text" name="warranty_expired" placeholder="นานเท่าไหร่"></div>
     </div>
-    <div class="card"><h2><span class="num">2</span> 💰 ราคา</h2><div class="row">
-      <div class="field"><label>ยอดฝาก *</label><div class="price-input"><input type="number" name="pawn" required></div></div>
-      <div class="field"><label>ราคาขาย *</label><div class="price-input"><input type="number" name="sell" required></div></div>
-    </div></div>
-    <button type="submit" class="submit-btn">✅ บันทึก + สร้างโพสต์ FB</button>
+
+    <div class="result-box grade-A">
+      <div class="grade-text">เกรด <span>A</span></div>
+      <div class="price-text">💰 <input type="number" name="pawn" placeholder="ยอดฝาก" required> บาท</div>
+    </div>
+
+    <button type="submit" class="submit-btn">ยืนยันบันทึก</button>
   </form>
 </div>
 
 <!-- ฟอร์ม Console -->
 <div id="form-console" class="form-section">
   <button class="back-btn" onclick="goBack()">← เปลี่ยนประเภท</button>
-  <form onsubmit="generatePost(event, 'console')">
+  <form onsubmit="generatePost(event, 'console')" oninput="recalc(this)" onchange="recalc(this)">
     <div class="card">
-      <h2><span class="num">1</span> 🎮 เกม Console</h2>
+      <h2 style="justify-content:center;font-size:18px;border-bottom:none;">🎮 รับจำนำเกม Console</h2>
+
+      <div class="section-h">[ ข้อมูลพื้นฐาน ]</div>
       <div class="field"><label>เลขที่สัญญา *</label><input type="text" name="contract" required></div>
       <div class="row">
         <div class="field"><label>ยี่ห้อ/รุ่น *</label><input type="text" name="model" placeholder="PS5 Slim / Switch OLED" required></div>
         <div class="field"><label>ความจุ</label><input type="text" name="storage" placeholder="1TB"></div>
       </div>
-      <div class="field"><label>เกรดสภาพ *</label>
-        <div class="radio-group">
-          <label class="grade-A"><input type="radio" name="grade" value="A สวย" required><span>A</span></label>
-          <label class="grade-B"><input type="radio" name="grade" value="B มีรอย"><span>B</span></label>
-          <label class="grade-C"><input type="radio" name="grade" value="C มีตำหนิ"><span>C</span></label>
-        </div>
-      </div>
-      <div class="field"><label>ตำหนิ (ถ้ามี)</label><textarea name="defects" rows="2"></textarea></div>
-      <div class="field"><label>อุปกรณ์ที่ได้</label>
-        <div class="checkbox-group">
-          <label><input type="checkbox" name="acc" value="กล่อง"><span>📦 กล่อง</span></label>
-          <label><input type="checkbox" name="acc" value="จอย"><span>🎮 จอย</span></label>
-          <label><input type="checkbox" name="acc" value="สาย HDMI"><span>📺 HDMI</span></label>
-          <label><input type="checkbox" name="acc" value="สายชาร์จ"><span>🔌 สายชาร์จ</span></label>
-          <label><input type="checkbox" name="acc" value="Dock"><span>🔌 Dock</span></label>
-          <label><input type="checkbox" name="acc" value="แผ่นเกม"><span>💿 เกม</span></label>
-        </div>
-      </div>
-      <div class="field"><label>ประกัน</label><input type="text" name="warranty" placeholder="เหลือถึง 01/05/69 / หมดประกัน"></div>
+
+      <div class="section-h">[ ตัวเครื่อง ] <span class="hint">(ระบุจำนวนทุกข้อ)</span></div>
+      <div class="defect-row"><label><input type="checkbox" name="d_body_scratch" data-defect="body"> รอยขูด</label><input type="number" name="d_body_scratch_n" placeholder="จำนวน" min="0"></div>
+      <div class="defect-row"><label><input type="checkbox" name="d_body_dent" data-defect="body"> รอยบุบ</label><input type="number" name="d_body_dent_n" placeholder="จำนวน" min="0"></div>
+      <div class="defect-row"><label><input type="checkbox" name="d_body_repaired" data-defect="body-major"> เคยซ่อม</label><input type="number" name="d_body_repaired_n" placeholder="ครั้ง" min="0"></div>
+
+      <div class="section-h">[ การทำงาน ] <span class="hint">(ติ๊กถ้ามีปัญหา)</span></div>
+      <div class="defect-row"><label><input type="checkbox" name="d_func_joy" data-defect="func"> จอย</label><input type="text" name="d_func_joy_t" placeholder="ปัญหา"></div>
+      <div class="defect-row"><label><input type="checkbox" name="d_func_port" data-defect="func"> พอร์ต</label><input type="text" name="d_func_port_t" placeholder="ปัญหา"></div>
+      <div class="defect-row"><label><input type="checkbox" name="d_func_disc" data-defect="func"> อ่านแผ่น/ฮาร์ด</label><input type="text" name="d_func_disc_t" placeholder="ปัญหา"></div>
+      <div class="defect-row"><label><input type="checkbox" name="d_func_fan" data-defect="func"> พัดลม/ความร้อน</label><input type="text" name="d_func_fan_t" placeholder="ปัญหา"></div>
+      <div class="defect-row"><label><input type="checkbox" name="d_func_other" data-defect="func"> อื่นๆ</label><input type="text" name="d_func_other_t" placeholder="ระบุปัญหา"></div>
+
+      <div class="section-h">[ อุปกรณ์เสริม ]</div>
+      <div class="defect-row"><label><input type="checkbox" name="acc_box"> กล่อง</label></div>
+      <div class="defect-row"><label><input type="checkbox" name="acc_joy"> จอย</label></div>
+      <div class="defect-row"><label><input type="checkbox" name="acc_hdmi"> สาย HDMI</label></div>
+      <div class="defect-row"><label><input type="checkbox" name="acc_cable"> สายชาร์จ</label></div>
+      <div class="defect-row"><label><input type="checkbox" name="acc_dock"> Dock</label></div>
+      <div class="defect-row"><label><input type="checkbox" name="acc_disc"> แผ่นเกม</label></div>
+      <div class="defect-row"><label><input type="checkbox" name="acc_other"> อื่นๆ</label><input type="text" name="acc_other_t" placeholder="ระบุ"></div>
+
+      <div class="section-h">[ ประกัน ]</div>
+      <div class="defect-row"><label><input type="radio" name="warranty_type" value="active"> ประกันเหลือ</label><input type="number" name="warranty_left" placeholder="เดือน" min="0"><span class="unit">เดือน</span></div>
+      <div class="defect-row"><label><input type="radio" name="warranty_type" value="expired"> หมดประกันแล้ว</label><input type="text" name="warranty_expired" placeholder="นานเท่าไหร่"></div>
     </div>
-    <div class="card"><h2><span class="num">2</span> 💰 ราคา</h2><div class="row">
-      <div class="field"><label>ยอดฝาก *</label><div class="price-input"><input type="number" name="pawn" required></div></div>
-      <div class="field"><label>ราคาขาย *</label><div class="price-input"><input type="number" name="sell" required></div></div>
-    </div></div>
-    <button type="submit" class="submit-btn">✅ บันทึก + สร้างโพสต์ FB</button>
+
+    <div class="result-box grade-A">
+      <div class="grade-text">เกรด <span>A</span></div>
+      <div class="price-text">💰 <input type="number" name="pawn" placeholder="ยอดฝาก" required> บาท</div>
+    </div>
+
+    <button type="submit" class="submit-btn">ยืนยันบันทึก</button>
   </form>
 </div>
 
 <!-- ฟอร์ม กระเป๋าแบรนด์ -->
 <div id="form-bag" class="form-section">
   <button class="back-btn" onclick="goBack()">← เปลี่ยนประเภท</button>
-  <form onsubmit="generatePost(event, 'bag')">
+  <form onsubmit="generatePost(event, 'bag')" oninput="recalc(this)" onchange="recalc(this)">
     <div class="card">
-      <h2><span class="num">1</span> 👜 กระเป๋าแบรนด์</h2>
+      <h2 style="justify-content:center;font-size:18px;border-bottom:none;">👜 รับจำนำกระเป๋าแบรนด์</h2>
+
+      <div class="section-h">[ ข้อมูลพื้นฐาน ]</div>
       <div class="field"><label>เลขที่สัญญา *</label><input type="text" name="contract" required></div>
       <div class="row">
         <div class="field"><label>ยี่ห้อ *</label><input type="text" name="brand" placeholder="Louis Vuitton / Chanel" required></div>
-        <div class="field"><label>รุ่น/Style *</label><input type="text" name="model" placeholder="Neverfull MM / Birkin 30" required></div>
+        <div class="field"><label>รุ่น/Style *</label><input type="text" name="model" placeholder="Neverfull MM" required></div>
       </div>
       <div class="row">
         <div class="field"><label>สี *</label><input type="text" name="color" required></div>
-        <div class="field"><label>วัสดุ</label><input type="text" name="material" placeholder="Monogram / Caviar"></div>
+        <div class="field"><label>วัสดุ</label><input type="text" name="material" placeholder="Monogram"></div>
       </div>
       <div class="row">
         <div class="field"><label>Date Code / Serial</label><input type="text" name="serial"></div>
@@ -626,82 +809,425 @@
           <label><input type="radio" name="auth" value="ต้องตรวจเพิ่ม"><span>⚠️ ตรวจเพิ่ม</span></label>
         </div>
       </div>
-      <div class="field"><label>เกรดสภาพ *</label>
-        <div class="radio-group">
-          <label class="grade-A"><input type="radio" name="grade" value="A สวย" required><span>A</span></label>
-          <label class="grade-B"><input type="radio" name="grade" value="B มีรอย"><span>B</span></label>
-          <label class="grade-C"><input type="radio" name="grade" value="C มีตำหนิ"><span>C</span></label>
-        </div>
-      </div>
-      <div class="field"><label>ตำหนิ (ถ้ามี)</label><textarea name="defects" rows="2" placeholder="เช่น มุมถลอก, หนังลอก, ซิปเสีย"></textarea></div>
-      <div class="field"><label>อุปกรณ์ที่ได้</label>
-        <div class="checkbox-group">
-          <label><input type="checkbox" name="acc" value="ถุงผ้า"><span>👝 ถุงผ้า</span></label>
-          <label><input type="checkbox" name="acc" value="กล่อง"><span>📦 กล่อง</span></label>
-          <label><input type="checkbox" name="acc" value="ใบเซอร์"><span>📜 ใบเซอร์</span></label>
-          <label><input type="checkbox" name="acc" value="การ์ด"><span>💳 การ์ด</span></label>
-          <label><input type="checkbox" name="acc" value="สายสะพาย"><span>🪢 สายสะพาย</span></label>
-          <label><input type="checkbox" name="acc" value="กุญแจ"><span>🔑 กุญแจ</span></label>
-          <label><input type="checkbox" name="acc" value="ใบเสร็จ"><span>🧾 ใบเสร็จ</span></label>
-        </div>
-      </div>
-      <div class="field"><label>ประกัน / Authentic</label><input type="text" name="warranty" placeholder="ใบเซอร์ของแท้ / ประกัน 1 ปี"></div>
+
+      <div class="section-h">[ ตัวกระเป๋า ] <span class="hint">(ระบุจำนวนทุกข้อ)</span></div>
+      <div class="defect-row"><label><input type="checkbox" name="d_body_corner" data-defect="body"> มุมถลอก</label><input type="number" name="d_body_corner_n" placeholder="จุด" min="0"></div>
+      <div class="defect-row"><label><input type="checkbox" name="d_body_color" data-defect="body"> สีลอก/ซีด</label><input type="number" name="d_body_color_n" placeholder="จุด" min="0"></div>
+      <div class="defect-row"><label><input type="checkbox" name="d_body_scratch" data-defect="body"> รอยขีด</label><input type="number" name="d_body_scratch_n" placeholder="จุด" min="0"></div>
+      <div class="defect-row"><label><input type="checkbox" name="d_body_other" data-defect="body"> อื่นๆ</label><input type="text" name="d_body_other_t" placeholder="ระบุ"></div>
+
+      <div class="section-h">[ ภายใน ] <span class="hint">(ระบุจำนวนทุกข้อ)</span></div>
+      <div class="defect-row"><label><input type="checkbox" name="d_interior_lining" data-defect="interior"> ซับลอก</label><input type="number" name="d_interior_lining_n" placeholder="จุด" min="0"></div>
+      <div class="defect-row"><label><input type="checkbox" name="d_interior_stain" data-defect="interior"> คราบ</label><input type="number" name="d_interior_stain_n" placeholder="จุด" min="0"></div>
+      <div class="defect-row"><label><input type="checkbox" name="d_interior_other" data-defect="interior"> อื่นๆ</label><input type="text" name="d_interior_other_t" placeholder="ระบุ"></div>
+
+      <div class="section-h">[ ฮาร์ดแวร์ ] <span class="hint">(ติ๊กถ้ามีปัญหา)</span></div>
+      <div class="defect-row"><label><input type="checkbox" name="d_func_zip" data-defect="func"> ซิป</label><input type="text" name="d_func_zip_t" placeholder="ปัญหา"></div>
+      <div class="defect-row"><label><input type="checkbox" name="d_func_strap" data-defect="func"> สายสะพาย</label><input type="text" name="d_func_strap_t" placeholder="ปัญหา"></div>
+      <div class="defect-row"><label><input type="checkbox" name="d_func_buckle" data-defect="func"> ตะขอ/หัวเข็มขัด</label><input type="text" name="d_func_buckle_t" placeholder="ปัญหา"></div>
+      <div class="defect-row"><label><input type="checkbox" name="d_func_other" data-defect="func"> อื่นๆ</label><input type="text" name="d_func_other_t" placeholder="ระบุปัญหา"></div>
+
+      <div class="section-h">[ อุปกรณ์เสริม ]</div>
+      <div class="defect-row"><label><input type="checkbox" name="acc_dustbag"> ถุงผ้า</label></div>
+      <div class="defect-row"><label><input type="checkbox" name="acc_box"> กล่อง</label></div>
+      <div class="defect-row"><label><input type="checkbox" name="acc_cert"> ใบเซอร์</label></div>
+      <div class="defect-row"><label><input type="checkbox" name="acc_card"> การ์ด</label></div>
+      <div class="defect-row"><label><input type="checkbox" name="acc_strap"> สายสะพาย</label></div>
+      <div class="defect-row"><label><input type="checkbox" name="acc_key"> กุญแจ</label></div>
+      <div class="defect-row"><label><input type="checkbox" name="acc_receipt"> ใบเสร็จ</label></div>
+      <div class="defect-row"><label><input type="checkbox" name="acc_other"> อื่นๆ</label><input type="text" name="acc_other_t" placeholder="ระบุ"></div>
     </div>
-    <div class="card"><h2><span class="num">2</span> 💰 ราคา</h2><div class="row">
-      <div class="field"><label>ยอดฝาก *</label><div class="price-input"><input type="number" name="pawn" required></div></div>
-      <div class="field"><label>ราคาขาย *</label><div class="price-input"><input type="number" name="sell" required></div></div>
-    </div></div>
-    <button type="submit" class="submit-btn">✅ บันทึก + สร้างโพสต์ FB</button>
+
+    <div class="result-box grade-A">
+      <div class="grade-text">เกรด <span>A</span></div>
+      <div class="price-text">💰 <input type="number" name="pawn" placeholder="ยอดฝาก" required> บาท</div>
+    </div>
+
+    <button type="submit" class="submit-btn">ยืนยันบันทึก</button>
   </form>
 </div>
 
 <!-- ฟอร์ม Notebook -->
 <div id="form-notebook" class="form-section">
   <button class="back-btn" onclick="goBack()">← เปลี่ยนประเภท</button>
-  <form onsubmit="generatePost(event, 'notebook')">
+  <form onsubmit="generatePost(event, 'notebook')" oninput="recalc(this)" onchange="recalc(this)">
     <div class="card">
-      <h2><span class="num">1</span> 💻 Notebook</h2>
+      <h2 style="justify-content:center;font-size:18px;border-bottom:none;">💻 รับจำนำ Notebook</h2>
+
+      <div class="section-h">[ ข้อมูลพื้นฐาน ]</div>
       <div class="field"><label>เลขที่สัญญา *</label><input type="text" name="contract" required></div>
       <div class="row">
-        <div class="field"><label>ยี่ห้อ *</label><input type="text" name="brand" placeholder="ASUS / Dell / Lenovo / HP / Acer / MSI" required></div>
-        <div class="field"><label>รุ่น *</label><input type="text" name="model" placeholder="ROG Strix G16 / ThinkPad X1" required></div>
+        <div class="field"><label>ยี่ห้อ *</label><input type="text" name="brand" placeholder="ASUS / Dell / Lenovo / HP" required></div>
+        <div class="field"><label>รุ่น *</label><input type="text" name="model" placeholder="ROG Strix G16" required></div>
       </div>
       <div class="row">
-        <div class="field"><label>ขนาดจอ</label><select name="screen"><option value="">--</option><option>13"</option><option>14"</option><option>15.6"</option><option>16"</option><option>17"</option></select></div>
+        <div class="field"><label>ขนาดจอ</label><input type="text" name="screen" placeholder="15.6&quot;"></div>
         <div class="field"><label>ปี</label><input type="text" name="year" placeholder="2024"></div>
       </div>
-      <div class="field"><label>CPU *</label><input type="text" name="cpu" placeholder="Intel i7-13700H / Ryzen 7 7840HS" required></div>
+      <div class="field"><label>CPU *</label><input type="text" name="cpu" placeholder="i7-13700H / Ryzen 7 7840HS" required></div>
       <div class="row">
-        <div class="field"><label>RAM *</label><select name="ram" required><option value="">--</option><option>4GB</option><option>8GB</option><option>16GB</option><option>32GB</option><option>64GB</option><option>128GB</option></select></div>
-        <div class="field"><label>SSD/HDD *</label><select name="storage" required><option value="">--</option><option>128GB SSD</option><option>256GB SSD</option><option>512GB SSD</option><option>1TB SSD</option><option>2TB SSD</option><option>500GB HDD</option><option>1TB HDD</option></select></div>
+        <div class="field"><label>RAM *</label><input type="text" name="ram" placeholder="16GB" required></div>
+        <div class="field"><label>SSD/HDD *</label><input type="text" name="storage" placeholder="512GB SSD" required></div>
       </div>
-      <div class="field"><label>การ์ดจอ (ถ้ามี)</label><input type="text" name="gpu" placeholder="RTX 4060 / RTX 3050 / Onboard"></div>
+      <div class="field"><label>การ์ดจอ</label><input type="text" name="gpu" placeholder="RTX 4060 / Onboard"></div>
+
+      <div class="section-h">[ หน้าจอ ] <span class="hint">(ระบุจำนวนทุกข้อ)</span></div>
+      <div class="defect-row"><label><input type="checkbox" name="d_screen_scratch" data-defect="screen"> หลุดรอย</label><input type="number" name="d_screen_scratch_n" placeholder="จำนวน" min="0"></div>
+      <div class="defect-row"><label><input type="checkbox" name="d_screen_dead" data-defect="screen"> Pixel เสีย/จุดดับ</label><input type="number" name="d_screen_dead_n" placeholder="จำนวน" min="0"></div>
+      <div class="defect-row"><label><input type="checkbox" name="d_screen_replaced" data-defect="screen-major"> เปลี่ยนจอ</label><input type="number" name="d_screen_replaced_n" placeholder="ครั้ง" min="0"></div>
+
+      <div class="section-h">[ ตัวเครื่อง ] <span class="hint">(ระบุจำนวนทุกข้อ)</span></div>
+      <div class="defect-row"><label><input type="checkbox" name="d_body_scratch" data-defect="body"> รอยขูด</label><input type="number" name="d_body_scratch_n" placeholder="จำนวน" min="0"></div>
+      <div class="defect-row"><label><input type="checkbox" name="d_body_dent" data-defect="body"> รอยบุบ</label><input type="number" name="d_body_dent_n" placeholder="จำนวน" min="0"></div>
+      <div class="defect-row"><label><input type="checkbox" name="d_body_repaired" data-defect="body-major"> เคยซ่อม</label><input type="number" name="d_body_repaired_n" placeholder="ครั้ง" min="0"></div>
+
+      <div class="section-h">[ การทำงาน ] <span class="hint">(ติ๊กถ้ามีปัญหา)</span></div>
+      <div class="defect-row"><label><input type="checkbox" name="d_func_keyboard" data-defect="func"> คีย์บอร์ด</label><input type="text" name="d_func_keyboard_t" placeholder="ปัญหา"></div>
+      <div class="defect-row"><label><input type="checkbox" name="d_func_trackpad" data-defect="func"> ทัชแพด</label><input type="text" name="d_func_trackpad_t" placeholder="ปัญหา"></div>
+      <div class="defect-row"><label><input type="checkbox" name="d_func_port" data-defect="func"> พอร์ต</label><input type="text" name="d_func_port_t" placeholder="ปัญหา"></div>
+      <div class="defect-row"><label><input type="checkbox" name="d_func_fan" data-defect="func"> พัดลม/ความร้อน</label><input type="text" name="d_func_fan_t" placeholder="ปัญหา"></div>
+      <div class="defect-row"><label><input type="checkbox" name="d_func_other" data-defect="func"> อื่นๆ</label><input type="text" name="d_func_other_t" placeholder="ระบุปัญหา"></div>
+
+      <div class="section-h">[ แบตเตอรี่ ]</div>
+      <div class="field"><input type="number" name="battery" min="0" max="100" placeholder="ใส่ % (เว้นว่างได้)"></div>
+
+      <div class="section-h">[ อุปกรณ์เสริม ]</div>
+      <div class="defect-row"><label><input type="checkbox" name="acc_box"> กล่อง</label></div>
+      <div class="defect-row"><label><input type="checkbox" name="acc_adapter"> Adapter</label></div>
+      <div class="defect-row"><label><input type="checkbox" name="acc_bag"> กระเป๋า</label></div>
+      <div class="defect-row"><label><input type="checkbox" name="acc_mouse"> เมาส์</label></div>
+      <div class="defect-row"><label><input type="checkbox" name="acc_other"> อื่นๆ</label><input type="text" name="acc_other_t" placeholder="ระบุ"></div>
+
+      <div class="section-h">[ ประกัน ]</div>
+      <div class="defect-row"><label><input type="radio" name="warranty_type" value="active"> ประกันเหลือ</label><input type="number" name="warranty_left" placeholder="เดือน" min="0"><span class="unit">เดือน</span></div>
+      <div class="defect-row"><label><input type="radio" name="warranty_type" value="expired"> หมดประกันแล้ว</label><input type="text" name="warranty_expired" placeholder="นานเท่าไหร่"></div>
+    </div>
+
+    <div class="result-box grade-A">
+      <div class="grade-text">เกรด <span>A</span></div>
+      <div class="price-text">💰 <input type="number" name="pawn" placeholder="ยอดฝาก" required> บาท</div>
+    </div>
+
+    <button type="submit" class="submit-btn">ยืนยันบันทึก</button>
+  </form>
+</div>
+
+<!-- ฟอร์ม รถยนต์ -->
+<div id="form-car" class="form-section">
+  <button class="back-btn" onclick="goBack()">← เปลี่ยนประเภท</button>
+  <form onsubmit="generatePost(event, 'car')" oninput="recalc(this)" onchange="recalc(this)">
+    <div class="card">
+      <h2 style="justify-content:center;font-size:18px;border-bottom:none;">🚗 รับจำนำรถยนต์</h2>
+
+      <div class="section-h">[ ข้อมูลพื้นฐาน ]</div>
+      <div class="field"><label>เลขที่สัญญา *</label><input type="text" name="contract" required></div>
       <div class="row">
-        <div class="field"><label>🔋 แบต %</label><input type="number" name="battery" min="0" max="100" placeholder="85"></div>
-        <div class="field"><label>เกรดสภาพ *</label>
+        <div class="field"><label>ยี่ห้อ *</label><input type="text" name="brand" placeholder="Toyota / Honda" required></div>
+        <div class="field"><label>รุ่น *</label><input type="text" name="model" placeholder="Camry / Civic" required></div>
+      </div>
+      <div class="row">
+        <div class="field"><label>ปี *</label><input type="text" name="year" placeholder="2020" required></div>
+        <div class="field"><label>สี *</label><input type="text" name="color" placeholder="ขาวมุก" required></div>
+      </div>
+      <div class="row">
+        <div class="field"><label>เลขไมล์ (km) *</label><input type="number" name="mileage" placeholder="50000" required></div>
+        <div class="field"><label>เกียร์ *</label>
           <div class="radio-group">
-            <label class="grade-A"><input type="radio" name="grade" value="A สวย" required><span>A</span></label>
-            <label class="grade-B"><input type="radio" name="grade" value="B มีรอย"><span>B</span></label>
-            <label class="grade-C"><input type="radio" name="grade" value="C มีตำหนิ"><span>C</span></label>
+            <label><input type="radio" name="gear" value="Auto" required><span>Auto</span></label>
+            <label><input type="radio" name="gear" value="Manual"><span>Manual</span></label>
           </div>
         </div>
       </div>
-      <div class="field"><label>ตำหนิ (ถ้ามี)</label><textarea name="defects" rows="2" placeholder="เช่น Pixel เสีย, ขอบมีรอย, คีย์บอร์ดบางตัวกด"></textarea></div>
-      <div class="field"><label>อุปกรณ์ที่ได้</label>
-        <div class="checkbox-group">
-          <label><input type="checkbox" name="acc" value="กล่อง"><span>📦 กล่อง</span></label>
-          <label><input type="checkbox" name="acc" value="Adapter"><span>🔌 Adapter</span></label>
-          <label><input type="checkbox" name="acc" value="กระเป๋า"><span>💼 กระเป๋า</span></label>
-          <label><input type="checkbox" name="acc" value="เมาส์"><span>🖱️ เมาส์</span></label>
+      <div class="field"><label>เชื้อเพลิง *</label>
+        <div class="radio-group">
+          <label><input type="radio" name="fuel" value="เบนซิน" required><span>⛽ เบนซิน</span></label>
+          <label><input type="radio" name="fuel" value="ดีเซล"><span>🛢️ ดีเซล</span></label>
+          <label><input type="radio" name="fuel" value="ไฮบริด"><span>🔋 ไฮบริด</span></label>
+          <label><input type="radio" name="fuel" value="EV"><span>⚡ EV</span></label>
         </div>
       </div>
-      <div class="field"><label>ประกัน</label><input type="text" name="warranty" placeholder="เหลือถึง 01/05/69 หรือ หมดประกัน"></div>
+      <div class="row">
+        <div class="field"><label>ทะเบียน</label><input type="text" name="plate" placeholder="กก 1234"></div>
+        <div class="field"><label>เล่มทะเบียน *</label>
+          <div class="radio-group">
+            <label><input type="radio" name="book" value="มีเล่ม" required><span>📕 มีเล่ม</span></label>
+            <label><input type="radio" name="book" value="ติดไฟแนนซ์"><span>💳 ไฟแนนซ์</span></label>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-h">[ ตัวรถ ] <span class="hint">(ระบุจำนวนทุกข้อ)</span></div>
+      <div class="defect-row"><label><input type="checkbox" name="d_body_scratch" data-defect="body"> รอยขูด</label><input type="number" name="d_body_scratch_n" placeholder="จุด" min="0"></div>
+      <div class="defect-row"><label><input type="checkbox" name="d_body_color" data-defect="body"> สีถลอก</label><input type="number" name="d_body_color_n" placeholder="จุด" min="0"></div>
+      <div class="defect-row"><label><input type="checkbox" name="d_body_dent" data-defect="body"> รอยบุบ</label><input type="number" name="d_body_dent_n" placeholder="จุด" min="0"></div>
+      <div class="defect-row"><label><input type="checkbox" name="d_body_other" data-defect="body"> อื่นๆ</label><input type="text" name="d_body_other_t" placeholder="ระบุ"></div>
+
+      <div class="section-h">[ ภายใน ] <span class="hint">(ระบุจำนวนทุกข้อ)</span></div>
+      <div class="defect-row"><label><input type="checkbox" name="d_interior_seat" data-defect="interior"> เบาะ</label><input type="number" name="d_interior_seat_n" placeholder="จุด" min="0"></div>
+      <div class="defect-row"><label><input type="checkbox" name="d_interior_dash" data-defect="interior"> แดชบอร์ด</label><input type="number" name="d_interior_dash_n" placeholder="จุด" min="0"></div>
+      <div class="defect-row"><label><input type="checkbox" name="d_interior_other" data-defect="interior"> อื่นๆ</label><input type="text" name="d_interior_other_t" placeholder="ระบุ"></div>
+
+      <div class="section-h">[ การทำงาน ] <span class="hint">(ติ๊กถ้ามีปัญหา)</span></div>
+      <div class="defect-row"><label><input type="checkbox" name="d_func_engine" data-defect="func"> เครื่องยนต์</label><input type="text" name="d_func_engine_t" placeholder="ปัญหา"></div>
+      <div class="defect-row"><label><input type="checkbox" name="d_func_aircon" data-defect="func"> แอร์</label><input type="text" name="d_func_aircon_t" placeholder="ปัญหา"></div>
+      <div class="defect-row"><label><input type="checkbox" name="d_func_gearbox" data-defect="func"> เกียร์</label><input type="text" name="d_func_gearbox_t" placeholder="ปัญหา"></div>
+      <div class="defect-row"><label><input type="checkbox" name="d_func_electric" data-defect="func"> ไฟฟ้า</label><input type="text" name="d_func_electric_t" placeholder="ปัญหา"></div>
+      <div class="defect-row"><label><input type="checkbox" name="d_func_other" data-defect="func"> อื่นๆ</label><input type="text" name="d_func_other_t" placeholder="ระบุปัญหา"></div>
+
+      <div class="section-h">[ อุปกรณ์เสริม ]</div>
+      <div class="defect-row"><label><input type="checkbox" name="acc_key2"> กุญแจสำรอง</label></div>
+      <div class="defect-row"><label><input type="checkbox" name="acc_manual"> คู่มือ</label></div>
+      <div class="defect-row"><label><input type="checkbox" name="acc_spare"> ยางอะไหล่</label></div>
+      <div class="defect-row"><label><input type="checkbox" name="acc_camera"> กล้องหน้ารถ</label></div>
+      <div class="defect-row"><label><input type="checkbox" name="acc_other"> อื่นๆ</label><input type="text" name="acc_other_t" placeholder="ระบุ"></div>
+
+      <div class="section-h">[ พ.ร.บ. / ประกัน ]</div>
+      <div class="field"><input type="text" name="insurance" placeholder="เช่น พ.ร.บ.หมด 31/12/69 / ประกันชั้น 1"></div>
     </div>
-    <div class="card"><h2><span class="num">2</span> 💰 ราคา</h2><div class="row">
-      <div class="field"><label>ยอดฝาก *</label><div class="price-input"><input type="number" name="pawn" required></div></div>
-      <div class="field"><label>ราคาขาย *</label><div class="price-input"><input type="number" name="sell" required></div></div>
-    </div></div>
-    <button type="submit" class="submit-btn">✅ บันทึก + สร้างโพสต์ FB</button>
+
+    <div class="result-box grade-A">
+      <div class="grade-text">เกรด <span>A</span></div>
+      <div class="price-text">💰 <input type="number" name="pawn" placeholder="ยอดฝาก" required> บาท</div>
+    </div>
+
+    <button type="submit" class="submit-btn">ยืนยันบันทึก</button>
+  </form>
+</div>
+
+<!-- ฟอร์ม มอเตอร์ไซค์ -->
+<div id="form-motorbike" class="form-section">
+  <button class="back-btn" onclick="goBack()">← เปลี่ยนประเภท</button>
+  <form onsubmit="generatePost(event, 'motorbike')" oninput="recalc(this)" onchange="recalc(this)">
+    <div class="card">
+      <h2 style="justify-content:center;font-size:18px;border-bottom:none;">🏍️ รับจำนำมอเตอร์ไซค์</h2>
+
+      <div class="section-h">[ ข้อมูลพื้นฐาน ]</div>
+      <div class="field"><label>เลขที่สัญญา *</label><input type="text" name="contract" required></div>
+      <div class="row">
+        <div class="field"><label>ยี่ห้อ *</label><input type="text" name="brand" placeholder="Honda / Yamaha" required></div>
+        <div class="field"><label>รุ่น *</label><input type="text" name="model" placeholder="PCX 160 / Click 125" required></div>
+      </div>
+      <div class="row">
+        <div class="field"><label>ปี *</label><input type="text" name="year" placeholder="2023" required></div>
+        <div class="field"><label>สี *</label><input type="text" name="color" required></div>
+      </div>
+      <div class="row">
+        <div class="field"><label>CC</label><input type="text" name="cc" placeholder="125 / 160"></div>
+        <div class="field"><label>เลขไมล์ (km)</label><input type="number" name="mileage" placeholder="15000"></div>
+      </div>
+      <div class="row">
+        <div class="field"><label>ทะเบียน</label><input type="text" name="plate" placeholder="1กก 1234"></div>
+        <div class="field"><label>เล่มทะเบียน *</label>
+          <div class="radio-group">
+            <label><input type="radio" name="book" value="มีเล่ม" required><span>📕 มีเล่ม</span></label>
+            <label><input type="radio" name="book" value="ติดไฟแนนซ์"><span>💳 ไฟแนนซ์</span></label>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-h">[ ตัวรถ ] <span class="hint">(ระบุจำนวนทุกข้อ)</span></div>
+      <div class="defect-row"><label><input type="checkbox" name="d_body_scratch" data-defect="body"> รอยขูด</label><input type="number" name="d_body_scratch_n" placeholder="จุด" min="0"></div>
+      <div class="defect-row"><label><input type="checkbox" name="d_body_color" data-defect="body"> สีถลอก</label><input type="number" name="d_body_color_n" placeholder="จุด" min="0"></div>
+      <div class="defect-row"><label><input type="checkbox" name="d_body_crack" data-defect="body"> เปลือกแตก</label><input type="number" name="d_body_crack_n" placeholder="จุด" min="0"></div>
+      <div class="defect-row"><label><input type="checkbox" name="d_body_other" data-defect="body"> อื่นๆ</label><input type="text" name="d_body_other_t" placeholder="ระบุ"></div>
+
+      <div class="section-h">[ การทำงาน ] <span class="hint">(ติ๊กถ้ามีปัญหา)</span></div>
+      <div class="defect-row"><label><input type="checkbox" name="d_func_engine" data-defect="func"> เครื่องยนต์</label><input type="text" name="d_func_engine_t" placeholder="ปัญหา"></div>
+      <div class="defect-row"><label><input type="checkbox" name="d_func_light" data-defect="func"> ไฟ</label><input type="text" name="d_func_light_t" placeholder="ปัญหา"></div>
+      <div class="defect-row"><label><input type="checkbox" name="d_func_other" data-defect="func"> อื่นๆ</label><input type="text" name="d_func_other_t" placeholder="ระบุปัญหา"></div>
+
+      <div class="section-h">[ อุปกรณ์เสริม ]</div>
+      <div class="defect-row"><label><input type="checkbox" name="acc_key2"> กุญแจสำรอง</label></div>
+      <div class="defect-row"><label><input type="checkbox" name="acc_manual"> คู่มือ</label></div>
+      <div class="defect-row"><label><input type="checkbox" name="acc_helmet"> หมวกกันน็อค</label></div>
+      <div class="defect-row"><label><input type="checkbox" name="acc_topbox"> กล่องท้าย</label></div>
+      <div class="defect-row"><label><input type="checkbox" name="acc_other"> อื่นๆ</label><input type="text" name="acc_other_t" placeholder="ระบุ"></div>
+
+      <div class="section-h">[ พ.ร.บ. / ประกัน ]</div>
+      <div class="field"><input type="text" name="insurance" placeholder="เช่น พ.ร.บ.หมด 31/12/69"></div>
+    </div>
+
+    <div class="result-box grade-A">
+      <div class="grade-text">เกรด <span>A</span></div>
+      <div class="price-text">💰 <input type="number" name="pawn" placeholder="ยอดฝาก" required> บาท</div>
+    </div>
+
+    <button type="submit" class="submit-btn">ยืนยันบันทึก</button>
+  </form>
+</div>
+
+<!-- ฟอร์ม Android (รวม Samsung) -->
+<div id="form-android" class="form-section">
+  <button class="back-btn" onclick="goBack()">← เปลี่ยนประเภท</button>
+  <form onsubmit="generatePost(event, 'android')" oninput="recalc(this)" onchange="recalc(this)">
+    <div class="card">
+      <h2 style="justify-content:center;font-size:18px;border-bottom:none;">📱 รับจำนำ Android</h2>
+
+      <div class="section-h">[ ข้อมูลพื้นฐาน ]</div>
+      <div class="field"><label>เลขที่สัญญา *</label><input type="text" name="contract" required></div>
+      <div class="field"><label>IMEI</label><input type="text" name="imei" placeholder="สแกนหรือกรอก IMEI"></div>
+      <div class="row">
+        <div class="field"><label>ยี่ห้อ *</label><input type="text" name="brand" placeholder="Samsung / Xiaomi / Oppo / Vivo" required></div>
+        <div class="field"><label>รุ่น *</label><input type="text" name="model" placeholder="S24 Ultra / Reno 11" required></div>
+      </div>
+      <div class="row">
+        <div class="field"><label>สี *</label><input type="text" name="color" required></div>
+        <div class="field"><label>ความจุ *</label><input type="text" name="storage" placeholder="256GB" required></div>
+      </div>
+      <div class="field"><label>RAM</label><input type="text" name="ram" placeholder="8GB / 12GB"></div>
+
+      <div class="section-h">[ หน้าจอ ] <span class="hint">(ระบุจำนวนทุกข้อ)</span></div>
+      <div class="defect-row"><label><input type="checkbox" name="d_screen_scratch" data-defect="screen"> หลุดรอย</label><input type="number" name="d_screen_scratch_n" placeholder="จำนวน" min="0"></div>
+      <div class="defect-row"><label><input type="checkbox" name="d_screen_dead" data-defect="screen"> จุดดับ</label><input type="number" name="d_screen_dead_n" placeholder="จำนวน" min="0"></div>
+      <div class="defect-row"><label><input type="checkbox" name="d_screen_hairline" data-defect="screen"> ขนแมว</label><input type="number" name="d_screen_hairline_n" placeholder="จำนวน" min="0"></div>
+      <div class="defect-row"><label><input type="checkbox" name="d_screen_replaced" data-defect="screen-major"> เปลี่ยนจอ</label><input type="number" name="d_screen_replaced_n" placeholder="ครั้ง" min="0"></div>
+
+      <div class="section-h">[ ตัวเครื่อง ] <span class="hint">(ระบุจำนวนทุกข้อ)</span></div>
+      <div class="defect-row"><label><input type="checkbox" name="d_body_scratch" data-defect="body"> รอยขูด</label><input type="number" name="d_body_scratch_n" placeholder="จำนวน" min="0"></div>
+      <div class="defect-row"><label><input type="checkbox" name="d_body_dent" data-defect="body"> รอยบุบ</label><input type="number" name="d_body_dent_n" placeholder="จำนวน" min="0"></div>
+      <div class="defect-row"><label><input type="checkbox" name="d_body_repaired" data-defect="body-major"> เคยซ่อม</label><input type="number" name="d_body_repaired_n" placeholder="ครั้ง" min="0"></div>
+
+      <div class="section-h">[ การทำงาน ] <span class="hint">(ติ๊กถ้ามีปัญหา)</span></div>
+      <div class="defect-row"><label><input type="checkbox" name="d_func_camera" data-defect="func"> กล้อง</label><input type="text" name="d_func_camera_t" placeholder="ปัญหา"></div>
+      <div class="defect-row"><label><input type="checkbox" name="d_func_speaker" data-defect="func"> ลำโพง</label><input type="text" name="d_func_speaker_t" placeholder="ปัญหา"></div>
+      <div class="defect-row"><label><input type="checkbox" name="d_func_scan" data-defect="func"> สแกนนิ้ว/หน้า</label><input type="text" name="d_func_scan_t" placeholder="ปัญหา"></div>
+      <div class="defect-row"><label><input type="checkbox" name="d_func_other" data-defect="func"> อื่นๆ</label><input type="text" name="d_func_other_t" placeholder="ระบุปัญหา"></div>
+
+      <div class="section-h">[ แบตเตอรี่ ]</div>
+      <div class="field"><input type="number" name="battery" placeholder="ใส่ % (เว้นว่างได้)" min="0" max="100"></div>
+
+      <div class="section-h">[ อุปกรณ์เสริม ]</div>
+      <div class="defect-row"><label><input type="checkbox" name="acc_box"> กล่อง</label></div>
+      <div class="defect-row"><label><input type="checkbox" name="acc_cable"> สายชาร์จ</label></div>
+      <div class="defect-row"><label><input type="checkbox" name="acc_adapter"> Adapter</label></div>
+      <div class="defect-row"><label><input type="checkbox" name="acc_earphone"> หูฟัง</label></div>
+      <div class="defect-row"><label><input type="checkbox" name="acc_spen"> S Pen</label></div>
+      <div class="defect-row"><label><input type="checkbox" name="acc_case"> เคส</label></div>
+      <div class="defect-row"><label><input type="checkbox" name="acc_other"> อื่นๆ</label><input type="text" name="acc_other_t" placeholder="ระบุ"></div>
+
+      <div class="section-h">[ ประกัน ]</div>
+      <div class="defect-row"><label><input type="radio" name="warranty_type" value="active"> ประกันศูนย์เหลือ</label><input type="number" name="warranty_left" placeholder="เดือน" min="0"><span class="unit">เดือน</span></div>
+      <div class="defect-row"><label><input type="radio" name="warranty_type" value="expired"> หมดประกันแล้ว</label><input type="text" name="warranty_expired" placeholder="นานเท่าไหร่"></div>
+    </div>
+
+    <div class="result-box grade-A">
+      <div class="grade-text">เกรด <span>A</span></div>
+      <div class="price-text">💰 <input type="number" name="pawn" placeholder="ยอดฝาก" required> บาท</div>
+    </div>
+
+    <button type="submit" class="submit-btn">ยืนยันบันทึก</button>
+  </form>
+</div>
+
+<!-- ฟอร์ม Tablet -->
+<div id="form-tablet" class="form-section">
+  <button class="back-btn" onclick="goBack()">← เปลี่ยนประเภท</button>
+  <form onsubmit="generatePost(event, 'tablet')" oninput="recalc(this)" onchange="recalc(this)">
+    <div class="card">
+      <h2 style="justify-content:center;font-size:18px;border-bottom:none;">📲 รับจำนำ Tablet</h2>
+
+      <div class="section-h">[ ข้อมูลพื้นฐาน ]</div>
+      <div class="field"><label>เลขที่สัญญา *</label><input type="text" name="contract" required></div>
+      <div class="row">
+        <div class="field"><label>ยี่ห้อ *</label><input type="text" name="brand" placeholder="Samsung / Lenovo / Huawei" required></div>
+        <div class="field"><label>รุ่น *</label><input type="text" name="model" placeholder="Galaxy Tab S9" required></div>
+      </div>
+      <div class="row">
+        <div class="field"><label>สี *</label><input type="text" name="color" required></div>
+        <div class="field"><label>ความจุ *</label><input type="text" name="storage" placeholder="128GB" required></div>
+      </div>
+      <div class="row">
+        <div class="field"><label>RAM</label><input type="text" name="ram" placeholder="8GB"></div>
+        <div class="field"><label>การเชื่อมต่อ *</label>
+          <div class="radio-group">
+            <label><input type="radio" name="connect" value="Wi-Fi" required><span>📶 Wi-Fi</span></label>
+            <label><input type="radio" name="connect" value="Wi-Fi + Cellular"><span>📡 +Cellular</span></label>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-h">[ หน้าจอ ] <span class="hint">(ระบุจำนวนทุกข้อ)</span></div>
+      <div class="defect-row"><label><input type="checkbox" name="d_screen_scratch" data-defect="screen"> หลุดรอย</label><input type="number" name="d_screen_scratch_n" placeholder="จำนวน" min="0"></div>
+      <div class="defect-row"><label><input type="checkbox" name="d_screen_dead" data-defect="screen"> จุดดับ</label><input type="number" name="d_screen_dead_n" placeholder="จำนวน" min="0"></div>
+      <div class="defect-row"><label><input type="checkbox" name="d_screen_hairline" data-defect="screen"> ขนแมว</label><input type="number" name="d_screen_hairline_n" placeholder="จำนวน" min="0"></div>
+      <div class="defect-row"><label><input type="checkbox" name="d_screen_replaced" data-defect="screen-major"> เปลี่ยนจอ</label><input type="number" name="d_screen_replaced_n" placeholder="ครั้ง" min="0"></div>
+
+      <div class="section-h">[ ตัวเครื่อง ] <span class="hint">(ระบุจำนวนทุกข้อ)</span></div>
+      <div class="defect-row"><label><input type="checkbox" name="d_body_scratch" data-defect="body"> รอยขูด</label><input type="number" name="d_body_scratch_n" placeholder="จำนวน" min="0"></div>
+      <div class="defect-row"><label><input type="checkbox" name="d_body_dent" data-defect="body"> รอยบุบ</label><input type="number" name="d_body_dent_n" placeholder="จำนวน" min="0"></div>
+      <div class="defect-row"><label><input type="checkbox" name="d_body_bend" data-defect="body-major"> เครื่องงอ</label><input type="number" name="d_body_bend_n" placeholder="จุด" min="0"></div>
+      <div class="defect-row"><label><input type="checkbox" name="d_body_repaired" data-defect="body-major"> เคยซ่อม</label><input type="number" name="d_body_repaired_n" placeholder="ครั้ง" min="0"></div>
+
+      <div class="section-h">[ การทำงาน ] <span class="hint">(ติ๊กถ้ามีปัญหา)</span></div>
+      <div class="defect-row"><label><input type="checkbox" name="d_func_camera" data-defect="func"> กล้อง</label><input type="text" name="d_func_camera_t" placeholder="ปัญหา"></div>
+      <div class="defect-row"><label><input type="checkbox" name="d_func_speaker" data-defect="func"> ลำโพง</label><input type="text" name="d_func_speaker_t" placeholder="ปัญหา"></div>
+      <div class="defect-row"><label><input type="checkbox" name="d_func_touch" data-defect="func"> ทัชสกรีน</label><input type="text" name="d_func_touch_t" placeholder="ปัญหา"></div>
+      <div class="defect-row"><label><input type="checkbox" name="d_func_other" data-defect="func"> อื่นๆ</label><input type="text" name="d_func_other_t" placeholder="ระบุปัญหา"></div>
+
+      <div class="section-h">[ แบตเตอรี่ ]</div>
+      <div class="field"><input type="number" name="battery" placeholder="ใส่ % (เว้นว่างได้)" min="0" max="100"></div>
+
+      <div class="section-h">[ อุปกรณ์เสริม ]</div>
+      <div class="defect-row"><label><input type="checkbox" name="acc_box"> กล่อง</label></div>
+      <div class="defect-row"><label><input type="checkbox" name="acc_cable"> สายชาร์จ</label></div>
+      <div class="defect-row"><label><input type="checkbox" name="acc_adapter"> Adapter</label></div>
+      <div class="defect-row"><label><input type="checkbox" name="acc_pen"> ปากกา</label></div>
+      <div class="defect-row"><label><input type="checkbox" name="acc_keyboard"> Keyboard</label></div>
+      <div class="defect-row"><label><input type="checkbox" name="acc_case"> เคส</label></div>
+      <div class="defect-row"><label><input type="checkbox" name="acc_other"> อื่นๆ</label><input type="text" name="acc_other_t" placeholder="ระบุ"></div>
+
+      <div class="section-h">[ ประกัน ]</div>
+      <div class="defect-row"><label><input type="radio" name="warranty_type" value="active"> ประกันศูนย์เหลือ</label><input type="number" name="warranty_left" placeholder="เดือน" min="0"><span class="unit">เดือน</span></div>
+      <div class="defect-row"><label><input type="radio" name="warranty_type" value="expired"> หมดประกันแล้ว</label><input type="text" name="warranty_expired" placeholder="นานเท่าไหร่"></div>
+    </div>
+
+    <div class="result-box grade-A">
+      <div class="grade-text">เกรด <span>A</span></div>
+      <div class="price-text">💰 <input type="number" name="pawn" placeholder="ยอดฝาก" required> บาท</div>
+    </div>
+
+    <button type="submit" class="submit-btn">ยืนยันบันทึก</button>
+  </form>
+</div>
+
+<!-- ฟอร์ม อื่นๆ -->
+<div id="form-other" class="form-section">
+  <button class="back-btn" onclick="goBack()">← เปลี่ยนประเภท</button>
+  <form onsubmit="generatePost(event, 'other')" oninput="recalc(this)" onchange="recalc(this)">
+    <div class="card">
+      <h2 style="justify-content:center;font-size:18px;border-bottom:none;">📦 รับจำนำสินค้าอื่นๆ</h2>
+
+      <div class="section-h">[ ข้อมูลพื้นฐาน ]</div>
+      <div class="field"><label>เลขที่สัญญา *</label><input type="text" name="contract" required></div>
+      <div class="field"><label>ประเภทสินค้า *</label><input type="text" name="type" placeholder="เช่น ทอง / นาฬิกา / เครื่องประดับ" required></div>
+      <div class="row">
+        <div class="field"><label>ยี่ห้อ</label><input type="text" name="brand"></div>
+        <div class="field"><label>รุ่น/ชื่อสินค้า *</label><input type="text" name="model" required></div>
+      </div>
+      <div class="field"><label>รายละเอียด *</label><textarea name="detail" rows="3" placeholder="ระบุสเปก/รายละเอียดสินค้า เช่น น้ำหนัก, ขนาด, วัสดุ" required></textarea></div>
+
+      <div class="section-h">[ ตัวสินค้า ] <span class="hint">(ระบุจำนวนทุกข้อ)</span></div>
+      <div class="defect-row"><label><input type="checkbox" name="d_body_scratch" data-defect="body"> รอยขูด</label><input type="number" name="d_body_scratch_n" placeholder="จุด" min="0"></div>
+      <div class="defect-row"><label><input type="checkbox" name="d_body_dent" data-defect="body"> รอยบุบ</label><input type="number" name="d_body_dent_n" placeholder="จุด" min="0"></div>
+      <div class="defect-row"><label><input type="checkbox" name="d_body_repaired" data-defect="body-major"> เคยซ่อม</label><input type="number" name="d_body_repaired_n" placeholder="ครั้ง" min="0"></div>
+      <div class="defect-row"><label><input type="checkbox" name="d_body_other" data-defect="body"> อื่นๆ</label><input type="text" name="d_body_other_t" placeholder="ระบุ"></div>
+
+      <div class="section-h">[ การทำงาน ] <span class="hint">(ติ๊กถ้ามีปัญหา)</span></div>
+      <div class="defect-row"><label><input type="checkbox" name="d_func_other" data-defect="func"> ปัญหาการใช้งาน</label><input type="text" name="d_func_other_t" placeholder="ระบุปัญหา"></div>
+
+      <div class="section-h">[ อุปกรณ์เสริม / ของแถม ]</div>
+      <div class="field"><input type="text" name="accText" placeholder="เช่น กล่อง, ใบเซอร์, การ์ด"></div>
+
+      <div class="section-h">[ ประกัน ]</div>
+      <div class="field"><input type="text" name="insurance" placeholder="ใบรับประกัน / ประกัน 1 ปี"></div>
+    </div>
+
+    <div class="result-box grade-A">
+      <div class="grade-text">เกรด <span>A</span></div>
+      <div class="price-text">💰 <input type="number" name="pawn" placeholder="ยอดฝาก" required> บาท</div>
+    </div>
+
+    <button type="submit" class="submit-btn">ยืนยันบันทึก</button>
   </form>
 </div>
 
@@ -716,8 +1242,110 @@
 function selectCategory(cat) {
   document.getElementById('categoryPicker').style.display = 'none';
   document.querySelectorAll('.form-section').forEach(s => s.classList.remove('active'));
-  document.getElementById('form-' + cat).classList.add('active');
+  const section = document.getElementById('form-' + cat);
+  section.classList.add('active');
+  const form = section.querySelector('form');
+  if (form && form.querySelector('.result-box')) recalc(form);
   window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function recalc(form) {
+  if (!form) return;
+  let minor = 0, major = 0, funcIssues = 0;
+  form.querySelectorAll('.defect-row input[type="checkbox"][data-defect]').forEach(c => {
+    if (!c.checked) return;
+    const type = c.dataset.defect;
+    if (type === 'func') {
+      funcIssues++;
+    } else {
+      const numEl = c.closest('.defect-row').querySelector('input[type="number"]');
+      const n = Math.max(parseInt(numEl?.value) || 1, 1);
+      if (type.endsWith('-major')) major += n;
+      else minor += n;
+    }
+  });
+  const total = minor + major;
+  let grade = 'A';
+  if (funcIssues > 0 || major >= 1 || total >= 5) grade = 'C';
+  else if (total >= 1) grade = 'B';
+
+  const box = form.querySelector('.result-box');
+  if (!box) return;
+  box.classList.remove('grade-A', 'grade-B', 'grade-C');
+  box.classList.add('grade-' + grade);
+  const gradeSpan = box.querySelector('.grade-text span');
+  if (gradeSpan) gradeSpan.textContent = grade;
+}
+
+// helper: collect checked defects with counts/texts
+function collectDefects(d, items) {
+  // items: [{check, label, count, unit, text}]
+  return items.filter(i => d[i.check]).map(i => {
+    if (i.count && d[i.count]) return `${i.label} ${d[i.count]} ${i.unit || 'จุด'}`;
+    if (i.text && d[i.text]) return `${i.label} (${d[i.text]})`;
+    return i.label;
+  });
+}
+
+function buildWarranty(d) {
+  if (d.warranty_type === 'active' && d.warranty_left) return `\n🛡️ ประกันศูนย์เหลือ ${d.warranty_left} เดือน`;
+  if (d.warranty_type === 'expired') return `\n🛡️ หมดประกันแล้ว${d.warranty_expired ? ' '+d.warranty_expired : ''}`;
+  return '';
+}
+
+const FUNC_LABELS = {
+  camera:'กล้อง', speaker:'ลำโพง', faceid:'สแกนหน้า', scan:'สแกนนิ้ว/หน้า', touch:'ทัชสกรีน',
+  keyboard:'คีย์บอร์ด', trackpad:'ทัชแพด', port:'พอร์ต', fan:'พัดลม/ความร้อน',
+  button:'ปุ่ม/Crown', sensor:'Sensor',
+  left:'เสียงข้าง L', right:'เสียงข้าง R', mic:'ไมค์', battery:'แบต',
+  joy:'จอย', disc:'อ่านแผ่น/ฮาร์ด',
+  engine:'เครื่องยนต์', aircon:'แอร์', gearbox:'เกียร์', electric:'ไฟฟ้า', light:'ไฟ',
+  shutter:'ชัตเตอร์', af:'AF', screen:'จอ', flash:'แฟลช',
+  zip:'ซิป', strap:'สายสะพาย', buckle:'ตะขอ/หัวเข็มขัด'
+};
+
+// build defect lines for phone-like categories (iPhone/iPad/Android/Tablet/MacBook/Notebook/Watch/AirPods/Console)
+function phoneDefectLines(d) {
+  const lines = [];
+  const screen = collectDefects(d, [
+    {check:'d_screen_scratch', label:'หลุดรอย', count:'d_screen_scratch_n', unit:'จุด'},
+    {check:'d_screen_dead', label:'จุดดับ', count:'d_screen_dead_n', unit:'จุด'},
+    {check:'d_screen_hairline', label:'ขนแมว', count:'d_screen_hairline_n', unit:'จุด'},
+    {check:'d_screen_replaced', label:'เปลี่ยนจอ', count:'d_screen_replaced_n', unit:'ครั้ง'}
+  ]);
+  if (screen.length) lines.push(`📺 หน้าจอ: ${screen.join(', ')}`);
+  const body = collectDefects(d, [
+    {check:'d_body_scratch', label:'รอยขูด', count:'d_body_scratch_n', unit:'จุด'},
+    {check:'d_body_dent', label:'รอยบุบ', count:'d_body_dent_n', unit:'จุด'},
+    {check:'d_body_bend', label:'เครื่องงอ', count:'d_body_bend_n', unit:'จุด'},
+    {check:'d_body_repaired', label:'เคยซ่อม', count:'d_body_repaired_n', unit:'ครั้ง'}
+  ]);
+  if (body.length) lines.push(`🔧 ตัวเครื่อง: ${body.join(', ')}`);
+
+  const funcList = [];
+  Object.keys(d).forEach(k => {
+    const m = k.match(/^d_func_(.+)$/);
+    if (!m || k.endsWith('_t')) return;
+    const sub = m[1];
+    if (sub === 'other') {
+      funcList.push(d.d_func_other_t || 'อื่นๆ');
+    } else {
+      const label = FUNC_LABELS[sub] || sub;
+      const txt = d['d_func_' + sub + '_t'];
+      funcList.push(`${label}${txt ? ' ('+txt+')' : ''}`);
+    }
+  });
+  if (funcList.length) lines.push(`⚙️ การทำงาน: ${funcList.join(', ')}`);
+  return lines;
+}
+
+function accLine(d, items) {
+  // items: [{check, label}], with last one supporting acc_other_t
+  const result = items.filter(i => d[i.check]).map(i => {
+    if (i.check === 'acc_other') return d.acc_other_t || 'อื่นๆ';
+    return i.label;
+  });
+  return result.join(' + ') || 'เครื่องเปล่า';
 }
 
 function goBack() {
@@ -743,121 +1371,334 @@ function getFormData(form) {
 function generatePost(e, category) {
   e.preventDefault();
   const d = getFormData(e.target);
-  const acc = (d.acc || []).join(' + ') || 'เครื่องเปล่า';
+  const accList = [...(d.acc || [])];
+  if (d.accOther) accList.push(d.accOther);
+  const acc = accList.join(' + ') || 'เครื่องเปล่า';
   const defect = d.defects ? `\n⚠️ ${d.defects}` : '';
   let post = '';
 
   const warranty = d.warranty ? `\n🛡️ ประกัน: ${d.warranty}` : '';
 
   if (category === 'iphone') {
-    post = `📱 ${d.model} ${d.storage} สี ${d.color}
-✅ ${d.origin}
-🔋 แบต ${d.battery}%
-💎 เกรด ${d.grade}${defect}
-📦 ${acc}${warranty}
-💰 ${Number(d.sell).toLocaleString()} บาท
-📍 Thunder Cash ห้วยขวาง
-📞 inbox สอบถาม
-
-#iPhoneมือสอง #${d.model.replace(/\s/g,'')} #ThunderCash`;
+    const grade = e.target.querySelector('.grade-text span').textContent;
+    const accStr = accLine(d, [
+      {check:'acc_box', label:'กล่อง'}, {check:'acc_cable', label:'สายชาร์จ'},
+      {check:'acc_adapter', label:'Adapter'}, {check:'acc_other'}
+    ]);
+    const lines = [`📱 ${d.model} ${d.storage} สี ${d.color}`, `✅ ${d.origin}`];
+    if (d.battery) lines.push(`🔋 แบต ${d.battery}%`);
+    lines.push(`💎 เกรด ${grade}`);
+    phoneDefectLines(d).forEach(l => lines.push(l));
+    lines.push(`🎁 ${accStr}${buildWarranty(d)}`);
+    lines.push(`💰 ${Number(d.pawn).toLocaleString()} บาท`);
+    lines.push(`📍 Thunder Cash ห้วยขวาง`);
+    lines.push(`📞 inbox สอบถาม`);
+    lines.push('');
+    lines.push(`#iPhoneมือสอง #${d.model.replace(/\s/g,'')} #ThunderCash`);
+    post = lines.join('\n');
   }
   else if (category === 'ipad') {
-    post = `📲 ${d.model} ${d.storage} ${d.connect} สี ${d.color}
-🔋 แบต ${d.battery}%
-💎 เกรด ${d.grade}${defect}
-📦 ${acc}${warranty}
-💰 ${Number(d.sell).toLocaleString()} บาท
-📍 Thunder Cash ห้วยขวาง
-
-#iPadมือสอง #ThunderCash`;
-  }
-  else if (category === 'samsung') {
-    post = `📱 Samsung Galaxy ${d.model} ${d.storage}${d.ram ? ' ('+d.ram+' RAM)' : ''} สี ${d.color}
-🔋 แบต ${d.battery}%
-💎 เกรด ${d.grade}${defect}
-📦 ${acc}${warranty}
-💰 ${Number(d.sell).toLocaleString()} บาท
-📍 Thunder Cash ห้วยขวาง
-
-#Samsungมือสอง #Galaxy${d.model.replace(/\s/g,'')} #ThunderCash`;
+    const grade = e.target.querySelector('.grade-text span').textContent;
+    const accStr = accLine(d, [
+      {check:'acc_box', label:'กล่อง'}, {check:'acc_cable', label:'สายชาร์จ'},
+      {check:'acc_adapter', label:'Adapter'}, {check:'acc_pencil', label:'Pencil'},
+      {check:'acc_keyboard', label:'Keyboard'}, {check:'acc_case', label:'เคส'},
+      {check:'acc_other'}
+    ]);
+    const lines = [`📲 ${d.model} ${d.storage} ${d.connect} สี ${d.color}`];
+    if (d.battery) lines.push(`🔋 แบต ${d.battery}%`);
+    lines.push(`💎 เกรด ${grade}`);
+    phoneDefectLines(d).forEach(l => lines.push(l));
+    lines.push(`🎁 ${accStr}${buildWarranty(d)}`);
+    lines.push(`💰 ${Number(d.pawn).toLocaleString()} บาท`);
+    lines.push(`📍 Thunder Cash ห้วยขวาง`);
+    lines.push('');
+    lines.push(`#iPadมือสอง #ThunderCash`);
+    post = lines.join('\n');
   }
   else if (category === 'macbook') {
-    post = `💻 ${d.model} ปี ${d.year}
-⚙️ RAM ${d.ram} / SSD ${d.ssd} / สี ${d.color}
-🔋 แบต ${d.battery || '-'}% ${d.cycle ? '(Cycle '+d.cycle+')' : ''}
-💎 เกรด ${d.grade}${defect}
-📦 ${acc}${warranty}
-💰 ${Number(d.sell).toLocaleString()} บาท
-📍 Thunder Cash ห้วยขวาง
-
-#MacBookมือสอง #ThunderCash`;
+    const grade = e.target.querySelector('.grade-text span').textContent;
+    const accStr = accLine(d, [
+      {check:'acc_box', label:'กล่อง'}, {check:'acc_cable', label:'สายชาร์จ'},
+      {check:'acc_adapter', label:'Adapter'}, {check:'acc_bag', label:'กระเป๋า'},
+      {check:'acc_other'}
+    ]);
+    const lines = [`💻 ${d.model} ปี ${d.year}`, `⚙️ RAM ${d.ram} / SSD ${d.ssd} / สี ${d.color}`];
+    if (d.battery || d.cycle) lines.push(`🔋 แบต ${d.battery || '-'}%${d.cycle ? ' (Cycle '+d.cycle+')' : ''}`);
+    lines.push(`💎 เกรด ${grade}`);
+    phoneDefectLines(d).forEach(l => lines.push(l));
+    lines.push(`🎁 ${accStr}${buildWarranty(d)}`);
+    lines.push(`💰 ${Number(d.pawn).toLocaleString()} บาท`);
+    lines.push(`📍 Thunder Cash ห้วยขวาง`);
+    lines.push('');
+    lines.push(`#MacBookมือสอง #ThunderCash`);
+    post = lines.join('\n');
   }
   else if (category === 'camera') {
-    post = `📷 ${d.brand} ${d.model} (${d.type})
-${d.lens ? '🔭 Lens: ' + d.lens : ''}
-${d.shutter ? '📸 Shutter: ' + d.shutter : ''}
-${d.origin ? '✅ ' + d.origin : ''}
-💎 เกรด ${d.grade}${defect}
-📦 ${acc}${warranty}
-💰 ${Number(d.sell).toLocaleString()} บาท
-📍 Thunder Cash ห้วยขวาง
-
-#กล้องมือสอง #${d.brand} #ThunderCash`;
+    const grade = e.target.querySelector('.grade-text span').textContent;
+    const accStr = accLine(d, [
+      {check:'acc_box', label:'กล่อง'}, {check:'acc_battery', label:'แบต'},
+      {check:'acc_charger', label:'ที่ชาร์จ'}, {check:'acc_strap', label:'สายคล้อง'},
+      {check:'acc_sd', label:'Memory Card'}, {check:'acc_bag', label:'กระเป๋า'},
+      {check:'acc_other'}
+    ]);
+    const lines = [`📷 ${d.brand} ${d.model} (${d.type})`];
+    if (d.lens) lines.push(`🔭 Lens: ${d.lens}`);
+    if (d.shutter) lines.push(`📸 Shutter: ${d.shutter}`);
+    if (d.origin) lines.push(`✅ ${d.origin}`);
+    lines.push(`💎 เกรด ${grade}`);
+    phoneDefectLines(d).forEach(l => lines.push(l));
+    const lens = collectDefects(d, [
+      {check:'d_lens_scratch', label:'รอย', count:'d_lens_scratch_n', unit:'จุด'},
+      {check:'d_lens_mold', label:'รา', count:'d_lens_mold_n', unit:'จุด'},
+      {check:'d_lens_dust', label:'ฝุ่น', count:'d_lens_dust_n', unit:'จุด'},
+      {check:'d_lens_other', label:'อื่นๆ', text:'d_lens_other_t'}
+    ]);
+    if (lens.length) lines.push(`🔍 เลนส์: ${lens.join(', ')}`);
+    lines.push(`🎁 ${accStr}${buildWarranty(d)}`);
+    lines.push(`💰 ${Number(d.pawn).toLocaleString()} บาท`);
+    lines.push(`📍 Thunder Cash ห้วยขวาง`);
+    lines.push('');
+    lines.push(`#กล้องมือสอง #${d.brand} #ThunderCash`);
+    post = lines.join('\n');
   }
   else if (category === 'watch') {
-    post = `⌚ Apple Watch ${d.model} ${d.size} ${d.connect}
-🎨 สี ${d.color}
-🔋 แบต ${d.battery}%
-💎 เกรด ${d.grade}${defect}
-📦 ${acc}${warranty}
-💰 ${Number(d.sell).toLocaleString()} บาท
-📍 Thunder Cash ห้วยขวาง
-
-#AppleWatchมือสอง #ThunderCash`;
+    const grade = e.target.querySelector('.grade-text span').textContent;
+    const accStr = accLine(d, [
+      {check:'acc_box', label:'กล่อง'}, {check:'acc_band', label:'สาย'},
+      {check:'acc_charger', label:'ที่ชาร์จ'}, {check:'acc_other'}
+    ]);
+    const lines = [`⌚ Apple Watch ${d.model} ${d.size} ${d.connect}`, `🎨 สี ${d.color}`];
+    if (d.battery) lines.push(`🔋 แบต ${d.battery}%`);
+    lines.push(`💎 เกรด ${grade}`);
+    phoneDefectLines(d).forEach(l => lines.push(l));
+    lines.push(`🎁 ${accStr}${buildWarranty(d)}`);
+    lines.push(`💰 ${Number(d.pawn).toLocaleString()} บาท`);
+    lines.push(`📍 Thunder Cash ห้วยขวาง`);
+    lines.push('');
+    lines.push(`#AppleWatchมือสอง #ThunderCash`);
+    post = lines.join('\n');
   }
   else if (category === 'airpods') {
-    post = `🎧 ${d.brand} ${d.model}${d.color ? ' สี '+d.color : ''}
-💎 เกรด ${d.grade}${defect}
-📦 ${acc}${warranty}
-💰 ${Number(d.sell).toLocaleString()} บาท
-📍 Thunder Cash ห้วยขวาง
-
-#${d.brand}มือสอง #ThunderCash`;
+    const grade = e.target.querySelector('.grade-text span').textContent;
+    const accStr = accLine(d, [
+      {check:'acc_box', label:'กล่อง'}, {check:'acc_charge_case', label:'เคสชาร์จ'},
+      {check:'acc_cable', label:'สายชาร์จ'}, {check:'acc_tips', label:'จุกหู'},
+      {check:'acc_bag', label:'กระเป๋า'}, {check:'acc_other'}
+    ]);
+    const lines = [`🎧 ${d.brand} ${d.model}${d.color ? ' สี '+d.color : ''}`];
+    lines.push(`💎 เกรด ${grade}`);
+    phoneDefectLines(d).forEach(l => lines.push(l));
+    lines.push(`🎁 ${accStr}${buildWarranty(d)}`);
+    lines.push(`💰 ${Number(d.pawn).toLocaleString()} บาท`);
+    lines.push(`📍 Thunder Cash ห้วยขวาง`);
+    lines.push('');
+    lines.push(`#${d.brand}มือสอง #ThunderCash`);
+    post = lines.join('\n');
   }
   else if (category === 'console') {
-    post = `🎮 ${d.model}${d.storage ? ' '+d.storage : ''}
-💎 เกรด ${d.grade}${defect}
-📦 ${acc}${warranty}
-💰 ${Number(d.sell).toLocaleString()} บาท
-📍 Thunder Cash ห้วยขวาง
-
-#เกมมือสอง #${d.model.replace(/\s/g,'')} #ThunderCash`;
+    const grade = e.target.querySelector('.grade-text span').textContent;
+    const accStr = accLine(d, [
+      {check:'acc_box', label:'กล่อง'}, {check:'acc_joy', label:'จอย'},
+      {check:'acc_hdmi', label:'สาย HDMI'}, {check:'acc_cable', label:'สายชาร์จ'},
+      {check:'acc_dock', label:'Dock'}, {check:'acc_disc', label:'แผ่นเกม'},
+      {check:'acc_other'}
+    ]);
+    const lines = [`🎮 ${d.model}${d.storage ? ' '+d.storage : ''}`];
+    lines.push(`💎 เกรด ${grade}`);
+    phoneDefectLines(d).forEach(l => lines.push(l));
+    lines.push(`🎁 ${accStr}${buildWarranty(d)}`);
+    lines.push(`💰 ${Number(d.pawn).toLocaleString()} บาท`);
+    lines.push(`📍 Thunder Cash ห้วยขวาง`);
+    lines.push('');
+    lines.push(`#เกมมือสอง #${d.model.replace(/\s/g,'')} #ThunderCash`);
+    post = lines.join('\n');
   }
   else if (category === 'notebook') {
+    const grade = e.target.querySelector('.grade-text span').textContent;
+    const accStr = accLine(d, [
+      {check:'acc_box', label:'กล่อง'}, {check:'acc_adapter', label:'Adapter'},
+      {check:'acc_bag', label:'กระเป๋า'}, {check:'acc_mouse', label:'เมาส์'},
+      {check:'acc_other'}
+    ]);
     const screenText = d.screen ? ' ' + d.screen : '';
-    post = `💻 ${d.brand} ${d.model}${screenText}${d.year ? ' ปี '+d.year : ''}
-⚙️ ${d.cpu}
-🧠 RAM ${d.ram} / ${d.storage}${d.gpu ? '\n🎮 GPU: '+d.gpu : ''}
-${d.battery ? '🔋 แบต '+d.battery+'%' : ''}
-💎 เกรด ${d.grade}${defect}
-📦 ${acc}${warranty}
-💰 ${Number(d.sell).toLocaleString()} บาท
-📍 Thunder Cash ห้วยขวาง
-
-#Notebookมือสอง #${d.brand} #ThunderCash`;
+    const lines = [`💻 ${d.brand} ${d.model}${screenText}${d.year ? ' ปี '+d.year : ''}`, `⚙️ ${d.cpu}`, `🧠 RAM ${d.ram} / ${d.storage}`];
+    if (d.gpu) lines.push(`🎮 GPU: ${d.gpu}`);
+    if (d.battery) lines.push(`🔋 แบต ${d.battery}%`);
+    lines.push(`💎 เกรด ${grade}`);
+    phoneDefectLines(d).forEach(l => lines.push(l));
+    lines.push(`🎁 ${accStr}${buildWarranty(d)}`);
+    lines.push(`💰 ${Number(d.pawn).toLocaleString()} บาท`);
+    lines.push(`📍 Thunder Cash ห้วยขวาง`);
+    lines.push('');
+    lines.push(`#Notebookมือสอง #${d.brand} #ThunderCash`);
+    post = lines.join('\n');
   }
   else if (category === 'bag') {
-    post = `👜 ${d.brand} ${d.model}
-🎨 สี ${d.color}${d.material ? ' / '+d.material : ''}
-${d.year ? '📅 ปี '+d.year : ''}
-✅ ${d.auth}
-💎 เกรด ${d.grade}${defect}
-📦 ${acc}${warranty}
-💰 ${Number(d.sell).toLocaleString()} บาท
-📍 Thunder Cash ห้วยขวาง
-📞 inbox ขอรูปเพิ่มได้
-
-#กระเป๋าแบรนด์มือสอง #${d.brand.replace(/\s/g,'')} #ThunderCash`;
+    const grade = e.target.querySelector('.grade-text span').textContent;
+    const accStr = accLine(d, [
+      {check:'acc_dustbag', label:'ถุงผ้า'}, {check:'acc_box', label:'กล่อง'},
+      {check:'acc_cert', label:'ใบเซอร์'}, {check:'acc_card', label:'การ์ด'},
+      {check:'acc_strap', label:'สายสะพาย'}, {check:'acc_key', label:'กุญแจ'},
+      {check:'acc_receipt', label:'ใบเสร็จ'}, {check:'acc_other'}
+    ]);
+    const body = collectDefects(d, [
+      {check:'d_body_corner', label:'มุมถลอก', count:'d_body_corner_n', unit:'จุด'},
+      {check:'d_body_color', label:'สีลอก/ซีด', count:'d_body_color_n', unit:'จุด'},
+      {check:'d_body_scratch', label:'รอยขีด', count:'d_body_scratch_n', unit:'จุด'},
+      {check:'d_body_other', label:'อื่นๆ', text:'d_body_other_t'}
+    ]);
+    const interior = collectDefects(d, [
+      {check:'d_interior_lining', label:'ซับลอก', count:'d_interior_lining_n', unit:'จุด'},
+      {check:'d_interior_stain', label:'คราบ', count:'d_interior_stain_n', unit:'จุด'},
+      {check:'d_interior_other', label:'อื่นๆ', text:'d_interior_other_t'}
+    ]);
+    const lines = [`👜 ${d.brand} ${d.model}`, `🎨 สี ${d.color}${d.material ? ' / '+d.material : ''}`];
+    if (d.year) lines.push(`📅 ปี ${d.year}`);
+    lines.push(`✅ ${d.auth}`);
+    lines.push(`💎 เกรด ${grade}`);
+    if (body.length) lines.push(`👜 ตัวกระเป๋า: ${body.join(', ')}`);
+    if (interior.length) lines.push(`📂 ภายใน: ${interior.join(', ')}`);
+    const hardware = [];
+    Object.keys(d).forEach(k => {
+      const m = k.match(/^d_func_(.+)$/);
+      if (!m || k.endsWith('_t')) return;
+      const sub = m[1];
+      if (sub === 'other') hardware.push(d.d_func_other_t || 'อื่นๆ');
+      else hardware.push(`${FUNC_LABELS[sub] || sub}${d['d_func_'+sub+'_t'] ? ' ('+d['d_func_'+sub+'_t']+')' : ''}`);
+    });
+    if (hardware.length) lines.push(`🔩 ฮาร์ดแวร์: ${hardware.join(', ')}`);
+    lines.push(`🎁 ${accStr}`);
+    lines.push(`💰 ${Number(d.pawn).toLocaleString()} บาท`);
+    lines.push(`📍 Thunder Cash ห้วยขวาง`);
+    lines.push(`📞 inbox ขอรูปเพิ่มได้`);
+    lines.push('');
+    lines.push(`#กระเป๋าแบรนด์มือสอง #${d.brand.replace(/\s/g,'')} #ThunderCash`);
+    post = lines.join('\n');
+  }
+  else if (category === 'car') {
+    const grade = e.target.querySelector('.grade-text span').textContent;
+    const accStr = accLine(d, [
+      {check:'acc_key2', label:'กุญแจสำรอง'}, {check:'acc_manual', label:'คู่มือ'},
+      {check:'acc_spare', label:'ยางอะไหล่'}, {check:'acc_camera', label:'กล้องหน้ารถ'},
+      {check:'acc_other'}
+    ]);
+    const body = collectDefects(d, [
+      {check:'d_body_scratch', label:'รอยขูด', count:'d_body_scratch_n', unit:'จุด'},
+      {check:'d_body_color', label:'สีถลอก', count:'d_body_color_n', unit:'จุด'},
+      {check:'d_body_dent', label:'รอยบุบ', count:'d_body_dent_n', unit:'จุด'},
+      {check:'d_body_other', label:'อื่นๆ', text:'d_body_other_t'}
+    ]);
+    const interior = collectDefects(d, [
+      {check:'d_interior_seat', label:'เบาะ', count:'d_interior_seat_n', unit:'จุด'},
+      {check:'d_interior_dash', label:'แดชบอร์ด', count:'d_interior_dash_n', unit:'จุด'},
+      {check:'d_interior_other', label:'อื่นๆ', text:'d_interior_other_t'}
+    ]);
+    const lines = [`🚗 ${d.brand} ${d.model} ปี ${d.year}`, `🎨 สี ${d.color}`,
+      `🛣️ ไมล์ ${Number(d.mileage).toLocaleString()} km`, `⚙️ ${d.gear} / ${d.fuel}`,
+      `📕 ${d.book}`];
+    if (d.plate) lines.push(`🔢 ทะเบียน ${d.plate}`);
+    lines.push(`💎 เกรด ${grade}`);
+    if (body.length) lines.push(`🚙 ตัวรถ: ${body.join(', ')}`);
+    if (interior.length) lines.push(`💺 ภายใน: ${interior.join(', ')}`);
+    phoneDefectLines(d).filter(l => l.startsWith('⚙️')).forEach(l => lines.push(l));
+    lines.push(`🎁 ${accStr}`);
+    if (d.insurance) lines.push(`🛡️ ${d.insurance}`);
+    lines.push(`💰 ${Number(d.pawn).toLocaleString()} บาท`);
+    lines.push(`📍 Thunder Cash ห้วยขวาง`);
+    lines.push(`📞 inbox สอบถาม / นัดดูรถ`);
+    lines.push('');
+    lines.push(`#รถมือสอง #${d.brand.replace(/\s/g,'')} #${d.model.replace(/\s/g,'')} #ThunderCash`);
+    post = lines.join('\n');
+  }
+  else if (category === 'motorbike') {
+    const grade = e.target.querySelector('.grade-text span').textContent;
+    const accStr = accLine(d, [
+      {check:'acc_key2', label:'กุญแจสำรอง'}, {check:'acc_manual', label:'คู่มือ'},
+      {check:'acc_helmet', label:'หมวกกันน็อค'}, {check:'acc_topbox', label:'กล่องท้าย'},
+      {check:'acc_other'}
+    ]);
+    const body = collectDefects(d, [
+      {check:'d_body_scratch', label:'รอยขูด', count:'d_body_scratch_n', unit:'จุด'},
+      {check:'d_body_color', label:'สีถลอก', count:'d_body_color_n', unit:'จุด'},
+      {check:'d_body_crack', label:'เปลือกแตก', count:'d_body_crack_n', unit:'จุด'},
+      {check:'d_body_other', label:'อื่นๆ', text:'d_body_other_t'}
+    ]);
+    const lines = [`🏍️ ${d.brand} ${d.model} ปี ${d.year}`,
+      `🎨 สี ${d.color}${d.cc ? ' / '+d.cc+'cc' : ''}`];
+    if (d.mileage) lines.push(`🛣️ ไมล์ ${Number(d.mileage).toLocaleString()} km`);
+    lines.push(`📕 ${d.book}`);
+    if (d.plate) lines.push(`🔢 ทะเบียน ${d.plate}`);
+    lines.push(`💎 เกรด ${grade}`);
+    if (body.length) lines.push(`🏍️ ตัวรถ: ${body.join(', ')}`);
+    phoneDefectLines(d).filter(l => l.startsWith('⚙️')).forEach(l => lines.push(l));
+    lines.push(`🎁 ${accStr}`);
+    if (d.insurance) lines.push(`🛡️ ${d.insurance}`);
+    lines.push(`💰 ${Number(d.pawn).toLocaleString()} บาท`);
+    lines.push(`📍 Thunder Cash ห้วยขวาง`);
+    lines.push(`📞 inbox สอบถาม / นัดดูรถ`);
+    lines.push('');
+    lines.push(`#มอไซด์มือสอง #${d.brand.replace(/\s/g,'')} #${d.model.replace(/\s/g,'')} #ThunderCash`);
+    post = lines.join('\n');
+  }
+  else if (category === 'android') {
+    const grade = e.target.querySelector('.grade-text span').textContent;
+    const accStr = accLine(d, [
+      {check:'acc_box', label:'กล่อง'}, {check:'acc_cable', label:'สายชาร์จ'},
+      {check:'acc_adapter', label:'Adapter'}, {check:'acc_earphone', label:'หูฟัง'},
+      {check:'acc_spen', label:'S Pen'}, {check:'acc_case', label:'เคส'},
+      {check:'acc_other'}
+    ]);
+    const lines = [`📱 ${d.brand} ${d.model} ${d.storage}${d.ram ? ' ('+d.ram+' RAM)' : ''} สี ${d.color}`];
+    if (d.battery) lines.push(`🔋 แบต ${d.battery}%`);
+    lines.push(`💎 เกรด ${grade}`);
+    phoneDefectLines(d).forEach(l => lines.push(l));
+    lines.push(`🎁 ${accStr}${buildWarranty(d)}`);
+    lines.push(`💰 ${Number(d.pawn).toLocaleString()} บาท`);
+    lines.push(`📍 Thunder Cash ห้วยขวาง`);
+    lines.push('');
+    lines.push(`#${d.brand}มือสอง #${d.model.replace(/\s/g,'')} #ThunderCash`);
+    post = lines.join('\n');
+  }
+  else if (category === 'tablet') {
+    const grade = e.target.querySelector('.grade-text span').textContent;
+    const accStr = accLine(d, [
+      {check:'acc_box', label:'กล่อง'}, {check:'acc_cable', label:'สายชาร์จ'},
+      {check:'acc_adapter', label:'Adapter'}, {check:'acc_pen', label:'ปากกา'},
+      {check:'acc_keyboard', label:'Keyboard'}, {check:'acc_case', label:'เคส'},
+      {check:'acc_other'}
+    ]);
+    const lines = [`📲 ${d.brand} ${d.model} ${d.storage}${d.ram ? ' ('+d.ram+' RAM)' : ''} ${d.connect}`, `🎨 สี ${d.color}`];
+    if (d.battery) lines.push(`🔋 แบต ${d.battery}%`);
+    lines.push(`💎 เกรด ${grade}`);
+    phoneDefectLines(d).forEach(l => lines.push(l));
+    lines.push(`🎁 ${accStr}${buildWarranty(d)}`);
+    lines.push(`💰 ${Number(d.pawn).toLocaleString()} บาท`);
+    lines.push(`📍 Thunder Cash ห้วยขวาง`);
+    lines.push('');
+    lines.push(`#Tabletมือสอง #${d.brand.replace(/\s/g,'')} #ThunderCash`);
+    post = lines.join('\n');
+  }
+  else if (category === 'other') {
+    const grade = e.target.querySelector('.grade-text span').textContent;
+    const body = collectDefects(d, [
+      {check:'d_body_scratch', label:'รอยขูด', count:'d_body_scratch_n', unit:'จุด'},
+      {check:'d_body_dent', label:'รอยบุบ', count:'d_body_dent_n', unit:'จุด'},
+      {check:'d_body_repaired', label:'เคยซ่อม', count:'d_body_repaired_n', unit:'ครั้ง'},
+      {check:'d_body_other', label:'อื่นๆ', text:'d_body_other_t'}
+    ]);
+    const lines = [`📦 ${d.type}${d.brand ? ' - '+d.brand : ''} ${d.model}`, `📝 ${d.detail}`];
+    lines.push(`💎 เกรด ${grade}`);
+    if (body.length) lines.push(`🔧 ตัวสินค้า: ${body.join(', ')}`);
+    if (d.d_func_other) lines.push(`⚙️ การทำงาน: ${d.d_func_other_t || 'มีปัญหา'}`);
+    if (d.accText) lines.push(`🎁 ${d.accText}`);
+    if (d.insurance) lines.push(`🛡️ ${d.insurance}`);
+    lines.push(`💰 ${Number(d.pawn).toLocaleString()} บาท`);
+    lines.push(`📍 Thunder Cash ห้วยขวาง`);
+    lines.push(`📞 inbox สอบถาม`);
+    lines.push('');
+    lines.push(`#${d.type.replace(/\s/g,'')}มือสอง #ThunderCash`);
+    post = lines.join('\n');
   }
 
   document.getElementById('previewText').textContent = post.trim();
